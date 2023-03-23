@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { userModel } from '../models/user.model';
 import { HttpError, HttpSuccess } from '../../../utils/message';
 import {
   ACCESS_TOKEN_SECRET_KEY,
   REFRESH_TOKEN_SECRET_KEY
 } from '../../../apiConfig';
+import { createUser, findUser } from '../database';
 
 interface payloadType {
   firstname: string;
@@ -18,6 +18,10 @@ interface payloadType {
   isVerified: boolean;
 }
 
+interface userPayloadType extends payloadType {
+  id: number;
+}
+
 /**
  * Service for handling user sign up
  *
@@ -28,7 +32,7 @@ export const userSignup = async (payload: payloadType) => {
   const { email, password } = payload;
 
   try {
-    const existingUser = await userModel.findOne({ email });
+    const existingUser = await findUser(email);
 
     if (existingUser) {
       return HttpError.Conflict('User already exists.');
@@ -36,19 +40,19 @@ export const userSignup = async (payload: payloadType) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const userData = await userModel.create({
+    const userData: userPayloadType = await createUser({
       ...payload,
       password: hashedPassword
     });
 
     const accessToken = jwt.sign(
-      { email: userData.email, id: userData._id },
+      { email: userData.email, id: userData.id },
       ACCESS_TOKEN_SECRET_KEY,
       { expiresIn: '30m' }
     );
 
     const refreshToken = jwt.sign(
-      { email: userData.email, id: userData._id },
+      { email: userData.email, id: userData.id },
       REFRESH_TOKEN_SECRET_KEY,
       { expiresIn: '7d' }
     );
