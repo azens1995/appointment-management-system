@@ -1,6 +1,6 @@
 # Appointment Management System
 
-Appointment Management System is a project build upon the Node and Typescript. 
+Appointment Management System is a project build upon the Node and Typescript.
 
 The main purpose of this project is to create the playground for the unit testing learning.
 
@@ -26,6 +26,7 @@ The main purpose of this project is to create the playground for the unit testin
 4. Run `npm run prisma:generate` to install prisma client.
 
 `npm run start:dev` start the server in development mode.
+`npm run test:dev` to start Jest testing
 
 ## Database Migration and Setting
 
