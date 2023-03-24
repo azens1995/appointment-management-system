@@ -33,6 +33,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.5",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "eslint": "^8.36.0",
@@ -50,6 +51,7 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "@prisma/client": "^4.11.0"
+    "@prisma/client": "^4.11.0",
+    "uuid": "^9.0.0"
   }
 }
