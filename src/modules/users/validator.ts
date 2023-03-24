@@ -4,10 +4,10 @@ const validator = (schema: Joi.ObjectSchema) => (payload: object) =>
   schema.validate(payload, { abortEarly: false });
 
 const signupSchema = Joi.object({
-  firstname: Joi.string().required(),
-  lastname: Joi.string().required(),
+  firstName: Joi.string().required(),
+  lastName: Joi.string().required(),
   email: Joi.string().email().required(),
-  phone: Joi.number()
+  phoneNumber: Joi.number()
     .integer()
     .min(10 ** 9)
     .max(10 ** 10 - 1)

@@ -3,7 +3,6 @@ dotenv.config();
 
 import { PORT } from './apiConfig';
 import express, { Express } from 'express';
-import { client } from './modules/users/database';
 import userRouter from './modules/users/routes/user.route';
 
 const app: Express = express();
@@ -13,8 +12,6 @@ app.use(express.json());
 
 app.use('/users', userRouter);
 
-client.connect().then(() => {
-  app.listen(port, () => {
-    console.log(`Connected successfully on port ${port}`);
-  });
+app.listen(port, () => {
+  console.log(`Connected successfully on port ${port}`);
 });

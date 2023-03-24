@@ -11,8 +11,7 @@ const prisma = new PrismaClient();
           email: 'johndoe1@gmail.com',
           phoneNumber: '9848565658',
           password: 'Award123$',
-          address: 'Washington DC',
-
+          address: 'Washington DC'
         },
         {
           firstName: 'John',
@@ -25,17 +24,21 @@ const prisma = new PrismaClient();
       ]
     });
 
-    const appointmentBy = await prisma.user.findFirst({ where: { lastName: 'Doe1', }, });
-    const apointmentFor = await prisma.user.findFirst({ where: { lastName: 'Doe2', }, });
+    const appointmentBy = await prisma.user.findFirst({
+      where: { lastName: 'Doe1' }
+    });
+    const apointmentFor = await prisma.user.findFirst({
+      where: { lastName: 'Doe2' }
+    });
 
     await prisma.appointment.create({
       data: {
         title: 'Appointment By Doe1 For Doe2',
         date: new Date(),
         appointmentBy: appointmentBy?.id as string,
-        appointmentFor: apointmentFor?.id as string,
+        appointmentFor: apointmentFor?.id as string
       }
-    })
+    });
 
     console.log('Created: ', data);
   } catch (e) {
