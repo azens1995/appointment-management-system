@@ -1,13 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { HttpError, HttpSuccess } from '../../../utils/message';
+import { isUserAlreadyExist, createUser } from '../repository/user.repository';
 import {
   ACCESS_TOKEN_SECRET_KEY,
   REFRESH_TOKEN_SECRET_KEY
 } from '../../../apiConfig';
-
-const prisma = new PrismaClient();
 
 /**
  * Service for handling user sign up
@@ -19,11 +18,7 @@ export const userSignup = async (payload: Prisma.UserCreateInput) => {
   const { email, password } = payload;
 
   try {
-    const existingUser = await prisma.user.findUnique({
-      where: {
-        email
-      }
-    });
+    const existingUser = await isUserAlreadyExist(email);
 
     if (existingUser) {
       return HttpError.Conflict('User already exists.');
@@ -31,12 +26,7 @@ export const userSignup = async (payload: Prisma.UserCreateInput) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const userData = await prisma.user.create({
-      data: {
-        ...payload,
-        password: hashedPassword
-      }
-    });
+    const userData = await createUser({ ...payload, password: hashedPassword });
 
     const accessToken = jwt.sign(
       { email: userData.email, id: userData.id },
