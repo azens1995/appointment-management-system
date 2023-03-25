@@ -19,3 +19,9 @@ export const createUser = async (data: Prisma.UserCreateInput) => {
 
   return userData;
 };
+
+export const fetchUser = async () => {
+  const userData = await prisma.user.findMany({});
+
+  return userData;
+};

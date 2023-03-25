@@ -2,7 +2,11 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Prisma } from '@prisma/client';
 import { HttpError, HttpSuccess } from '../../../utils/message';
-import { getExistingUser, createUser } from '../repository/user.repository';
+import {
+  fetchUser,
+  createUser,
+  getExistingUser
+} from '../repository/user.repository';
 import {
   ACCESS_TOKEN_SECRET_KEY,
   REFRESH_TOKEN_SECRET_KEY
@@ -85,6 +89,20 @@ export const userSignin = async (payload: Prisma.UserCreateInput) => {
       accessToken,
       refreshToken
     });
+  } catch (error) {
+    return HttpError.BadRequest('Something went wrong.');
+  }
+};
+
+/**
+ * Service for fetching user
+ * @returns {object}
+ */
+export const getUsers = async () => {
+  try {
+    const users = await fetchUser();
+
+    return HttpSuccess.OK(users);
   } catch (error) {
     return HttpError.BadRequest('Something went wrong.');
   }
