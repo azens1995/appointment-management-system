@@ -2,14 +2,14 @@ import { Prisma, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const isUserAlreadyExist = async (email: string) => {
+export const getExistingUser = async (email: string) => {
   const existingUser = await prisma.user.findUnique({
     where: {
       email
     }
   });
 
-  return existingUser ? true : false;
+  return existingUser;
 };
 
 export const createUser = async (data: Prisma.UserCreateInput) => {

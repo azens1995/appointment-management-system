@@ -1,4 +1,4 @@
-import { validateSignup } from '../validator';
+import { validateSignup, validateSignin } from '../validator';
 import { Request, Response, NextFunction } from 'express';
 
 export const validation = (req: Request, res: Response, next: NextFunction) => {
@@ -7,6 +7,9 @@ export const validation = (req: Request, res: Response, next: NextFunction) => {
   switch (req.url) {
     case '/signup':
       ({ error } = validateSignup(req.body));
+      break;
+    case '/signin':
+      ({ error } = validateSignin(req.body));
       break;
     default:
       break;

@@ -19,7 +19,15 @@ const signupSchema = Joi.object({
   password: Joi.string().min(5).required(),
   address: Joi.string().required(),
   isActive: Joi.boolean().required(),
-  isVerified: Joi.boolean().required()
+  isVerified: Joi.boolean().required(),
+  requestedAppointments: Joi.array(),
+  invitedAppointments: Joi.array()
+});
+
+const signinSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(5).required()
 });
 
 export const validateSignup = validator(signupSchema);
+export const validateSignin = validator(signinSchema);
