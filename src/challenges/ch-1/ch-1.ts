@@ -4,14 +4,14 @@
  * @param time number
  * @param rate number
  *
- * @return SI (Simple Interest) number
+ * @return simpleInterest number
  */
 export function calculateSimpleInterest(
   principle: number,
   time: number,
   rate: number
 ) {
-  const SI = (principle * time * rate) / 100;
+  const simpleInterest = (principle * time * rate) / 100;
 
-  return SI;
+  return simpleInterest;
 }
