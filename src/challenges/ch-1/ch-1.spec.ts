@@ -8,19 +8,19 @@ describe('Calculate Simple Interest', () => {
     const rate = 1.1;
     const expectedValue = 11;
     // Act
-    const SI = calculateSimpleInterest(principle, time, rate);
+    const simpleInterest = calculateSimpleInterest(principle, time, rate);
     // Assert
-    expect(SI).toBe(expectedValue);
+    expect(simpleInterest).toBe(expectedValue);
   });
 
-  test('it should not return negative value.', () => {
+  test('it should return positive value with positive parameter values', () => {
     // Arrange
     const principle = 2000;
     const time = 1.5;
     const rate = 1.2;
     // Act
-    const SI = calculateSimpleInterest(principle, time, rate);
+    const simpleInterest = calculateSimpleInterest(principle, time, rate);
     // Assert
-    expect(SI).not.toBeLessThanOrEqual(0);
+    expect(simpleInterest).not.toBeLessThanOrEqual(0);
   });
 });

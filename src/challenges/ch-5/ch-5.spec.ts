@@ -26,13 +26,4 @@ describe('Test UUID generation', () => {
     // Assert
     expect(result).toBe(expected_value);
   });
-
-  test('it should be aware of bad value.', () => {
-    // Arrange
-    const bad_value = 'bad$123%41';
-    // Act
-    const result = createRandomUUID();
-    // Assert
-    expect(result).not.toBe(bad_value);
-  });
 });

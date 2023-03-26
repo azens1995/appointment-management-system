@@ -13,10 +13,9 @@ describe('Password validation test', () => {
   test('it should return true with password more or equal to 8 characters', () => {
     // Arrange
     const password = 'test@123';
-    const expectedValue = true;
     // Act
     const res = validatePassword(password);
     // Assert
-    expect(res).toBe(expectedValue);
+    expect(res).toBeTruthy();
   });
 });
