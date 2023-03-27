@@ -1,4 +1,4 @@
-import { getToday } from "../utils/ch-7";
+import { getToday } from './ch-7';
 
 let mockDate: Date;
 
@@ -14,12 +14,12 @@ describe('Test Date mock', () => {
   });
 
   beforeEach(() => {
-    jest.advanceTimersByTime(20)
-  })
+    jest.advanceTimersByTime(20);
+  });
 
   afterEach(() => {
-    jest.advanceTimersByTime(10)
-  })
+    jest.advanceTimersByTime(10);
+  });
 
   it('should return constant date advanced by 20ms from initial', () => {
     //Arrange and Act
@@ -41,4 +41,4 @@ test('After resetting the timer, should not match the mock Date 2020-02-01', () 
   const currentDate = getToday();
   //Assert
   expect(currentDate.toISOString()).not.toEqual(mockDate);
-})
+});
