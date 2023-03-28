@@ -12,9 +12,9 @@ const appointmentCreateSchema = Joi.object({
   isConfirmed: Joi.boolean().required(),
   purpose: Joi.string().optional(),
   symptoms: Joi.string().optional(),
-  isCancelled: Joi.string().optional(),
+  isCancelled: Joi.string().optional()
 });
 
 export const appointmentCreateValidator = (req: Request) => {
   return validator(appointmentCreateSchema, req.body);
-}
+};

@@ -4,7 +4,11 @@ import { ACCESS_TOKEN_SECRET_KEY } from '../../../apiConfig';
 
 const ACCESS_TOKEN: string = ACCESS_TOKEN_SECRET_KEY;
 
-export const auth = (req: Request & {user?: any}, res: Response, next: NextFunction) => {
+export const auth = (
+  req: Request & { user?: any },
+  res: Response,
+  next: NextFunction
+) => {
   try {
     let token = req.headers.authorization;
 
