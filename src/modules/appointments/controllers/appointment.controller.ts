@@ -19,12 +19,15 @@ export const getUserCreatedAppointments = async (
 };
 
 export const createAppointment = async (
-  req: Request,
+  req: RequestWithUser,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const response = await AppointmentService.createAppointment(req.body);
+    const response = await AppointmentService.createAppointment({
+      ...req.body,
+      appointmentBy: req.user.id
+    });
 
     return res.status(response.status).json(response.data);
   } catch (error) {

@@ -8,7 +8,7 @@ const appointmentRouter = express.Router();
 appointmentRouter.post(
   '/',
   validate(appointmentCreateValidator),
-  AppointmentController.createAppointment
+  AppointmentController.createAppointment as any
 );
 
 appointmentRouter.get(

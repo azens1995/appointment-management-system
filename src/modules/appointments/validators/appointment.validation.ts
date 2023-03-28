@@ -7,7 +7,6 @@ const validator = (schema: Joi.ObjectSchema, payload: any) =>
 const appointmentCreateSchema = Joi.object({
   title: Joi.string().required(),
   date: Joi.date().required(),
-  appointmentBy: Joi.string().required(),
   appointmentFor: Joi.string().required(),
   isConfirmed: Joi.boolean().required(),
   purpose: Joi.string().optional(),
