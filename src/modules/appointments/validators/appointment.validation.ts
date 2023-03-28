@@ -1,5 +1,5 @@
-import { Request } from 'express';
 import Joi from 'joi';
+import { Request } from 'express';
 
 const validator = (schema: Joi.ObjectSchema, payload: any) =>
   schema.validate(payload, { abortEarly: false });

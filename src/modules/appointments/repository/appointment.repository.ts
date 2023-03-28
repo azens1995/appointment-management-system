@@ -20,7 +20,7 @@ export async function getAppointmentById(appointmentId: string) {
   return appointment;
 }
 
-// READ an appointment by ID
+// READ an appointment by userId
 export async function getAppointmentsByUserId(
   appointmentByUserId: string,
   limit: number,
@@ -34,7 +34,7 @@ export async function getAppointmentsByUserId(
   return appointment;
 }
 
-// READ an appointment by ID
+// READ an appointment by userId
 export async function getAppointmentForUserId(
   appointmentForUserId: string,
   limit: number,
