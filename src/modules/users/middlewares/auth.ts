@@ -4,15 +4,20 @@ import { ACCESS_TOKEN_SECRET_KEY } from '../../../apiConfig';
 
 const ACCESS_TOKEN: string = ACCESS_TOKEN_SECRET_KEY;
 
-export const auth = (req: Request, res: Response, next: NextFunction) => {
+export const auth = (
+  req: Request & { user?: any },
+  res: Response,
+  next: NextFunction
+) => {
   try {
     let token = req.headers.authorization;
 
     if (token) {
       token = token.split(' ')[1];
 
-      jwt.verify(token, ACCESS_TOKEN, (err) => {
+      jwt.verify(token, ACCESS_TOKEN, (err, decoded) => {
         if (!err) {
+          req.user = decoded as Record<string, any>;
           next();
         } else if (err.message === 'jwt expired') {
           return res.status(400).json({ message: 'Access Token expired.' });
