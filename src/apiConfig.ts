@@ -1,4 +1,4 @@
-export const PORT = process.env.PORT;
+export const PORT = Number(process.env.PORT ?? 3000);
 export const ACCESS_TOKEN_SECRET_KEY =
   process.env.ACCESS_TOKEN_SECRET_KEY || '';
 export const REFRESH_TOKEN_SECRET_KEY =
