@@ -1,5 +1,5 @@
 import winston from 'winston';
-import { ENVIRONMENT } from './secrets';
+import { ENVIRONMENT } from '../apiConfig';
 
 // Define your severity levels.
 // With them, You can create log files,
