@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import { ACCESS_TOKEN_SECRET_KEY } from '../../../apiConfig';
+import { ACCESS_TOKEN_SECRET_KEY } from '../../../config/appConfig';
 
 const ACCESS_TOKEN: string = ACCESS_TOKEN_SECRET_KEY;
 
