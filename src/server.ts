@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
+dotenv.config();
 
 import app from './app';
 import { PORT } from './apiConfig';
 import logger from './utils/logger';
 
-dotenv.config();
 const port: number = PORT;
 
 app.listen(port, () => {
