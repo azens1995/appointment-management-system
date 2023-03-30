@@ -1,4 +1,5 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient, Prisma, Appointment } from '@prisma/client';
+import { getCurrentDate } from '../../../utils/date';
 
 const prisma = new PrismaClient();
 
@@ -24,9 +25,12 @@ export async function getAppointmentById(appointmentId: string) {
 export async function getAppointmentsByUserId(
   appointmentByUserId: string,
   limit: number,
-  page: number
+  page: number,
+  sortBy: Prisma.AppointmentScalarFieldEnum,
+  sortDir: Prisma.SortOrder
 ) {
   const appointment = await prisma.appointment.findMany({
+    orderBy: { [sortBy]: sortDir },
     where: { appointmentBy: appointmentByUserId },
     take: limit,
     skip: (page - 1) * limit
@@ -38,9 +42,12 @@ export async function getAppointmentsByUserId(
 export async function getAppointmentForUserId(
   appointmentForUserId: string,
   limit: number,
-  page: number
+  page: number,
+  sortBy: Prisma.AppointmentScalarFieldEnum,
+  sortDir: Prisma.SortOrder
 ) {
   const appointment = await prisma.appointment.findMany({
+    orderBy: { [sortBy]: sortDir },
     where: { appointmentFor: appointmentForUserId },
     take: limit,
     skip: (page - 1) * limit
@@ -51,19 +58,25 @@ export async function getAppointmentForUserId(
 // UPDATE an appointment by ID
 export async function updateAppointmentById(
   appointmentId: string,
-  appointmentData: Prisma.AppointmentUpdateInput
+  appointmentData: Prisma.AppointmentUncheckedUpdateInput
 ) {
-  const appointment = await prisma.appointment.update({
-    where: { id: appointmentId },
+  const appointment = await prisma.appointment.updateMany({
+    where: {
+      id: appointmentId,
+      appointmentBy: appointmentData.appointmentBy as string
+    },
     data: appointmentData
   });
   return appointment;
 }
 
 // DELETE an appointment by ID
-export async function deleteAppointmentById(appointmentId: string) {
-  const appointment = await prisma.appointment.delete({
-    where: { id: appointmentId }
+export async function deleteAppointmentById(
+  appointmentId: string,
+  userId: string
+) {
+  const appointment = await prisma.appointment.deleteMany({
+    where: { id: appointmentId, appointmentBy: userId }
   });
   return appointment;
 }
