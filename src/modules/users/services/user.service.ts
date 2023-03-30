@@ -10,7 +10,11 @@ import {
 import {
   ACCESS_TOKEN_SECRET_KEY,
   REFRESH_TOKEN_SECRET_KEY
-} from '../../../apiConfig';
+} from '../../../config/appConfig';
+import {
+  mapUserToUserResponse,
+  userLoginResponse
+} from '../mappers/userResponseMapper';
 
 /**
  * Service for handling user sign up
@@ -32,19 +36,8 @@ export const userSignup = async (payload: Prisma.UserCreateInput) => {
 
     const userData = await createUser({ ...payload, password: hashedPassword });
 
-    const accessToken = jwt.sign(
-      { email: userData.email, id: userData.id },
-      ACCESS_TOKEN_SECRET_KEY,
-      { expiresIn: '30m' }
-    );
-
-    const refreshToken = jwt.sign(
-      { email: userData.email, id: userData.id },
-      REFRESH_TOKEN_SECRET_KEY,
-      { expiresIn: '7d' }
-    );
-
-    return HttpSuccess.Created({ user: userData, accessToken, refreshToken });
+    const res = mapUserToUserResponse(userData);
+    return HttpSuccess.Created(res);
   } catch (error) {
     return HttpError.BadRequest(`Something went wrong. ${error}`);
   }
@@ -84,11 +77,8 @@ export const userSignin = async (payload: Prisma.UserCreateInput) => {
       { expiresIn: '7d' }
     );
 
-    return HttpSuccess.Created({
-      user: existingUser,
-      accessToken,
-      refreshToken
-    });
+    const res = userLoginResponse(existingUser, accessToken, refreshToken);
+    return HttpSuccess.OK(res);
   } catch (error) {
     return HttpError.BadRequest('Something went wrong.');
   }
@@ -101,8 +91,8 @@ export const userSignin = async (payload: Prisma.UserCreateInput) => {
 export const getUsers = async () => {
   try {
     const users = await fetchUser();
-
-    return HttpSuccess.OK(users);
+    const userResponse = users.map((user) => mapUserToUserResponse(user));
+    return HttpSuccess.OK(userResponse);
   } catch (error) {
     return HttpError.BadRequest('Something went wrong.');
   }
