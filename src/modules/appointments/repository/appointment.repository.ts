@@ -1,5 +1,4 @@
-import { PrismaClient, Prisma, Appointment } from '@prisma/client';
-import { getCurrentDate } from '../../../utils/date';
+import { PrismaClient, Prisma } from '@prisma/client';
 
 const prisma = new PrismaClient();
 

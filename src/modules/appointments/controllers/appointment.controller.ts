@@ -1,6 +1,6 @@
 import { Response, NextFunction, Request } from 'express';
 import * as AppointmentService from '../services/appointment.service';
-import { RequestWithUser } from '../../../common/interfaces/express.interface';
+import { RequestWithUser } from '@common/interfaces/express.interface';
 
 export const getUserCreatedAppointments = async (
   req: Request,

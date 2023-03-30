@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
-import { getCurrentDate } from '../../../utils/date';
-import { HttpError, HttpSuccess } from '../../../utils/message';
+import { getCurrentDate } from '@utils/date';
+import { HttpError, HttpSuccess } from '@utils/message';
 import * as AppointmentRepository from '../repository/appointment.repository';
 
 export const createAppointment = async (
