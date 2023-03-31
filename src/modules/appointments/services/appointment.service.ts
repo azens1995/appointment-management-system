@@ -2,6 +2,7 @@ import { Prisma } from '@prisma/client';
 import { getCurrentDate } from '@utils/date';
 import { HttpError, HttpSuccess } from '@utils/message';
 import * as AppointmentRepository from '../repository/appointment.repository';
+import { GetUserCreatedAppointmentPayload } from './../interfaces/userCreatedAppointment.interface';
 
 export const createAppointment = async (
   payload: Prisma.AppointmentUncheckedCreateInput
@@ -17,7 +18,9 @@ export const createAppointment = async (
   }
 };
 
-export const getUserCreatedAppointments = async (payload: any) => {
+export const getUserCreatedAppointments = async (
+  payload: GetUserCreatedAppointmentPayload
+) => {
   const {
     userId,
     limit = 10,
