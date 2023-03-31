@@ -1,69 +1,114 @@
+import {
+  GENERIC_OK_RESPONSE_MESSAGE,
+  GENERIC_CREATED_MESSAGE,
+  GENERIC_NO_CONTENT_MESSAGE
+} from './../constants/responseMessages';
+import { LooseObject } from '@common/interfaces/generic.interface';
+import { HttpResponse } from '@common/interfaces/response.interface';
+import { GENERIC_SERVER_ERROR_MESSAGE } from 'constants/responseMessages';
+
 export const HttpError = {
-  Invalid: (message: string) => {
+  BadRequest: (message: string, data: LooseObject = {}): HttpResponse => {
     return {
-      status: 400,
-      data: {
-        message: message
-      }
+      code: 400,
+      status: 'error',
+      message,
+      data
     };
   },
 
-  Forbidden: (message: string) => {
+  UnAuthorized: (message: string, data: LooseObject = {}): HttpResponse => {
     return {
-      status: 403,
-      data: {
-        message: message
-      }
+      code: 401,
+      status: 'error',
+      message,
+      data
     };
   },
 
-  NotFound: (message: string) => {
+  Forbidden: (message: string, data: LooseObject = {}): HttpResponse => {
     return {
-      status: 404,
-      data: {
-        message: message
-      }
+      code: 403,
+      status: 'error',
+      message,
+      data
     };
   },
 
-  Conflict: (message: string) => {
+  NotFound: (message: string, data: LooseObject = {}): HttpResponse => {
     return {
-      status: 409,
-      data: {
-        message: message
-      }
+      code: 404,
+      status: 'error',
+      message,
+      data
     };
   },
 
-  BadRequest: (message: string) => {
+  Conflict: (message: string, data: LooseObject = {}): HttpResponse => {
     return {
-      status: 500,
-      data: {
-        message: message
-      }
+      code: 409,
+      status: 'error',
+      message,
+      data
+    };
+  },
+
+  ValidationError: (message: string, data: LooseObject = {}): HttpResponse => {
+    return {
+      code: 422,
+      status: 'error',
+      message,
+      data
+    };
+  },
+
+  ServerError: (
+    message: string = GENERIC_SERVER_ERROR_MESSAGE,
+    data: LooseObject = {}
+  ): HttpResponse => {
+    return {
+      code: 500,
+      status: 'error',
+      message,
+      data
     };
   }
 };
 
 export const HttpSuccess = {
-  OK: (data: object) => {
+  OK: (
+    data: LooseObject = {},
+    message = GENERIC_OK_RESPONSE_MESSAGE
+  ): HttpResponse => {
     return {
-      status: 200,
-      data: data
+      code: 200,
+      status: 'success',
+      message,
+      data
     };
   },
 
-  Created: (data: object) => {
+  Created: (
+    data: LooseObject,
+    message = GENERIC_CREATED_MESSAGE
+  ): HttpResponse => {
     return {
-      status: 201,
-      data: data
+      code: 201,
+      status: 'success',
+      message,
+      data
     };
   },
 
-  Accepted: (data: object) => {
+  NoContent: (
+    data: LooseObject = {},
+    message = GENERIC_NO_CONTENT_MESSAGE
+  ): HttpResponse => {
     return {
-      status: 202,
-      data: data
+      code: 204,
+      status: 'success',
+      message,
+      data
     };
   }
 };

@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import { ValidationResult } from 'joi';
+import { Request, Response } from 'express';
 
 export type JoiValidatorFunction = (
   req: Request,

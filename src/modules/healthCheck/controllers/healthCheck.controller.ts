@@ -1,3 +1,4 @@
+import { sendResponse } from '@utils/http';
 import { Request, Response, NextFunction } from 'express';
 import { getHealthCheck } from '../services/healthCheck.services';
 
@@ -14,9 +15,9 @@ export const getCheck = async (
   next: NextFunction
 ): Promise<Response | void> => {
   try {
-    const response = await getHealthCheck();
+    const responseData = await getHealthCheck();
 
-    return res.status(response.status).json(response.data);
+    return sendResponse(res, responseData);
   } catch (error) {
     next(error);
   }

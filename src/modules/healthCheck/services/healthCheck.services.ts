@@ -1,4 +1,4 @@
-import { HttpError, HttpSuccess } from '../../../utils/message';
+import { HttpError, HttpSuccess } from '@utils/message';
 
 export const getHealthCheck = async () => {
   try {
@@ -11,6 +11,6 @@ export const getHealthCheck = async () => {
 
     return HttpSuccess.OK(healthcheck);
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    return HttpError.ServerError('Something went wrong.');
   }
 };

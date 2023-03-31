@@ -39,7 +39,7 @@ export const userSignup = async (payload: Prisma.UserCreateInput) => {
     const res = mapUserToUserResponse(userData);
     return HttpSuccess.Created(res);
   } catch (error) {
-    return HttpError.BadRequest(`Something went wrong. ${error}`);
+    return HttpError.ServerError(`Something went wrong. ${error}`);
   }
 };
 
@@ -62,7 +62,7 @@ export const userSignin = async (payload: Prisma.UserCreateInput) => {
     const matchPassword = await bcrypt.compare(password, existingUser.password);
 
     if (!matchPassword) {
-      return HttpError.Invalid('Invalid Credentials.');
+      return HttpError.BadRequest('Invalid Credentials.');
     }
 
     const accessToken = jwt.sign(
@@ -80,7 +80,7 @@ export const userSignin = async (payload: Prisma.UserCreateInput) => {
     const res = userLoginResponse(existingUser, accessToken, refreshToken);
     return HttpSuccess.OK(res);
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    return HttpError.ServerError('Something went wrong.');
   }
 };
 
@@ -94,6 +94,6 @@ export const getUsers = async () => {
     const userResponse = users.map((user) => mapUserToUserResponse(user));
     return HttpSuccess.OK(userResponse);
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    return HttpError.ServerError('Something went wrong.');
   }
 };

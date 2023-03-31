@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import { sendResponse } from '@utils/http';
+import { HttpError } from '@utils/message';
 import { Request, Response, NextFunction } from 'express';
 import { ACCESS_TOKEN_SECRET_KEY } from '../../../config/appConfig';
 
@@ -20,15 +22,18 @@ export const auth = (
           req.user = decoded as Record<string, any>;
           next();
         } else if (err.message === 'jwt expired') {
-          return res.status(400).json({ message: 'Access Token expired.' });
+          const responseData = HttpError.BadRequest('Access Token expired!');
+          return sendResponse(res, responseData);
         } else {
-          return res.status(500).json({ message: err });
+          const responseData = HttpError.ServerError(err.message);
+          return sendResponse(res, responseData);
         }
       });
     } else {
-      return res.status(401).json({ message: 'Unauthorized User' });
+      throw new Error();
     }
   } catch (error) {
-    return res.status(401).json({ message: 'Unauthorized User' });
+    const responseData = HttpError.UnAuthorized('Unauthorized User');
+    return sendResponse(res, responseData);
   }
 };

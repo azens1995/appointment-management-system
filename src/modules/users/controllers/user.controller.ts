@@ -1,3 +1,4 @@
+import { sendResponse } from '@utils/http';
 import { Request, Response } from 'express';
 import { userSignup, userSignin, getUsers } from '../services/user.service';
 
@@ -9,9 +10,9 @@ import { userSignup, userSignin, getUsers } from '../services/user.service';
  * @returns {Promise<Response>}
  */
 export const signup = async (req: Request, res: Response) => {
-  const response = await userSignup(req.body);
+  const responseData = await userSignup(req.body);
 
-  return res.status(response.status).json(response.data);
+  return sendResponse(res, responseData);
 };
 
 /**
@@ -22,9 +23,9 @@ export const signup = async (req: Request, res: Response) => {
  * @returns {Promise<Response>}
  */
 export const signin = async (req: Request, res: Response) => {
-  const response = await userSignin(req.body);
+  const responseData = await userSignin(req.body);
 
-  return res.status(response.status).json(response.data);
+  return sendResponse(res, responseData);
 };
 
 /**
@@ -35,7 +36,7 @@ export const signin = async (req: Request, res: Response) => {
  * @returns {Promise<Response>}
  */
 export const get = async (req: Request, res: Response) => {
-  const response = await getUsers();
+  const responseData = await getUsers();
 
-  return res.status(response.status).json(response.data);
+  return sendResponse(res, responseData);
 };

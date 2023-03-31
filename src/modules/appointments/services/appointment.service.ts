@@ -14,7 +14,7 @@ export const createAppointment = async (
     });
     return HttpSuccess.Created(appointment);
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    return HttpError.ServerError('Something went wrong.');
   }
 };
 
@@ -37,9 +37,10 @@ export const getUserCreatedAppointments = async (
       sortDir
     );
 
-    return HttpSuccess.OK(appointments);
+    if (appointments.length) return HttpSuccess.OK(appointments);
+    return HttpSuccess.NoContent();
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    return HttpError.ServerError();
   }
 };
 
@@ -67,12 +68,16 @@ export const updateAppointment = async (
     );
 
     if (!count) {
-      return HttpError.NotFound('Appointment not found!');
+      return HttpError.NotFound('Appointment not found!', { appointmentId });
     }
 
-    return HttpSuccess.OK({ message: 'Updated successfully!' });
+    const updatedAppointment = await AppointmentRepository.getAppointmentById(
+      appointmentId
+    );
+
+    return HttpSuccess.OK(updatedAppointment, 'Updated successfully!');
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    return HttpError.ServerError();
   }
 };
 
@@ -100,8 +105,8 @@ export const deleteAppointment = async (
       return HttpError.NotFound('Appointment not found!');
     }
 
-    return HttpSuccess.OK({ message: 'Deleted successfully!' });
+    return HttpSuccess.OK(oldAppointment, 'Deleted successfully!');
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    return HttpError.ServerError();
   }
 };

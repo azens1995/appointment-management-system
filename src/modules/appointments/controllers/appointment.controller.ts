@@ -1,3 +1,4 @@
+import { sendResponse } from '@utils/http';
 import { Response, NextFunction, Request } from 'express';
 import * as AppointmentService from '../services/appointment.service';
 import { RequestWithUser } from '@common/interfaces/express.interface';
@@ -8,12 +9,12 @@ export const getUserCreatedAppointments = async (
   next: NextFunction
 ) => {
   try {
-    const response = await AppointmentService.getUserCreatedAppointments({
+    const responseData = await AppointmentService.getUserCreatedAppointments({
       userId: (req as RequestWithUser).user.id,
       ...req.query
     });
 
-    return res.status(response.status).json(response.data);
+    return sendResponse(res, responseData);
   } catch (error) {
     next(error);
   }
@@ -25,12 +26,12 @@ export const createAppointment = async (
   next: NextFunction
 ) => {
   try {
-    const response = await AppointmentService.createAppointment({
+    const responseData = await AppointmentService.createAppointment({
       ...req.body,
       appointmentBy: (req as RequestWithUser).user.id
     });
 
-    return res.status(response.status).json(response.data);
+    return sendResponse(res, responseData);
   } catch (error) {
     next(error);
   }
@@ -42,12 +43,15 @@ export const updateAppointment = async (
   next: NextFunction
 ) => {
   try {
-    const response = await AppointmentService.updateAppointment(req.params.id, {
-      ...req.body,
-      appointmentBy: (req as RequestWithUser).user.id
-    });
+    const responseData = await AppointmentService.updateAppointment(
+      req.params.id,
+      {
+        ...req.body,
+        appointmentBy: (req as RequestWithUser).user.id
+      }
+    );
 
-    return res.status(response.status).json(response.data);
+    return sendResponse(res, responseData);
   } catch (error) {
     next(error);
   }
@@ -59,12 +63,12 @@ export const deleteAppointment = async (
   next: NextFunction
 ) => {
   try {
-    const response = await AppointmentService.deleteAppointment(
+    const responseData = await AppointmentService.deleteAppointment(
       req.params.id,
       (req as RequestWithUser).user.id
     );
 
-    return res.status(response.status).json(response.data);
+    return sendResponse(res, responseData);
   } catch (error) {
     next(error);
   }

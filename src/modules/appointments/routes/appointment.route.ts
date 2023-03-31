@@ -1,10 +1,10 @@
 import express from 'express';
-import { validate } from '../../../common/middlewares/validate.middleware';
-import * as AppointmentController from '../controllers/appointment.controller';
 import {
   appointmentCreateValidator,
   appointmentUpdateValidator
 } from '../validators/appointment.validation';
+import { validate } from '../../../common/middlewares/validate.middleware';
+import * as AppointmentController from '../controllers/appointment.controller';
 
 const appointmentRouter = express.Router();
 

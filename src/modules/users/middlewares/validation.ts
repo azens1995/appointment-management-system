@@ -1,3 +1,5 @@
+import { sendResponse } from '@utils/http';
+import { HttpError } from '@utils/message';
 import { validateSignup, validateSignin } from '../validator';
 import { Request, Response, NextFunction } from 'express';
 
@@ -16,7 +18,8 @@ export const validation = (req: Request, res: Response, next: NextFunction) => {
   }
 
   if (error) {
-    return res.status(422).json({ message: error.details });
+    const responseData = HttpError.ValidationError(error.details);
+    return sendResponse(res, responseData);
   } else {
     next();
   }
