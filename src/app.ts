@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import 'express-async-errors';
 
 import { auth } from './modules/users/middlewares/auth';
 import userRouter from './modules/users/routes/user.route';

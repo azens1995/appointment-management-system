@@ -58,7 +58,7 @@ export const userSignin = async (payload: Prisma.UserCreateInput) => {
     if (!existingUser) {
       throw new AppError({
         httpCode: HttpCode.BAD_REQUEST,
-        message: `User not found for email: ${email}`
+        message: `User with email: ${email} is not registered in our system. Please use registered email to login into the system.`
       });
     }
     const matchPassword = await bcrypt.compare(password, existingUser.password);
