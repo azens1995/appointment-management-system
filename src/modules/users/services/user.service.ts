@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Prisma } from '@prisma/client';
-import { HttpError, HttpSuccess } from '../../../utils/message';
+import { HttpSuccess } from '../../../utils/message';
 import {
   fetchUser,
   createUser,
@@ -15,6 +15,7 @@ import {
   mapUserToUserResponse,
   userLoginResponse
 } from '../mappers/userResponseMapper';
+import { AppError, HttpCode } from '../../../common/exceptions/appError';
 
 /**
  * Service for handling user sign up
@@ -27,19 +28,19 @@ export const userSignup = async (payload: Prisma.UserCreateInput) => {
 
   try {
     const existingUser = await getExistingUser(email);
-
     if (existingUser) {
-      return HttpError.Conflict('User already exists.');
+      throw new AppError({
+        httpCode: HttpCode.BAD_REQUEST,
+        message: `User already exists with email ${email}`
+      });
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const userData = await createUser({ ...payload, password: hashedPassword });
 
     const res = mapUserToUserResponse(userData);
     return HttpSuccess.Created(res);
   } catch (error) {
-    return HttpError.BadRequest(`Something went wrong. ${error}`);
+    throw error;
   }
 };
 
@@ -54,23 +55,24 @@ export const userSignin = async (payload: Prisma.UserCreateInput) => {
 
   try {
     const existingUser = await getExistingUser(email);
-
     if (!existingUser) {
-      return HttpError.NotFound('User not found.');
+      throw new AppError({
+        httpCode: HttpCode.BAD_REQUEST,
+        message: `User not found for email: ${email}`
+      });
     }
-
     const matchPassword = await bcrypt.compare(password, existingUser.password);
-
     if (!matchPassword) {
-      return HttpError.Invalid('Invalid Credentials.');
+      throw new AppError({
+        httpCode: HttpCode.BAD_REQUEST,
+        message: `Email or password did not match. Please check your credentials`
+      });
     }
-
     const accessToken = jwt.sign(
       { email: existingUser.email, id: existingUser.id },
       ACCESS_TOKEN_SECRET_KEY,
       { expiresIn: '30m' }
     );
-
     const refreshToken = jwt.sign(
       { email: existingUser.email, id: existingUser.id },
       REFRESH_TOKEN_SECRET_KEY,
@@ -80,7 +82,7 @@ export const userSignin = async (payload: Prisma.UserCreateInput) => {
     const res = userLoginResponse(existingUser, accessToken, refreshToken);
     return HttpSuccess.OK(res);
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    throw error;
   }
 };
 
@@ -94,6 +96,6 @@ export const getUsers = async () => {
     const userResponse = users.map((user) => mapUserToUserResponse(user));
     return HttpSuccess.OK(userResponse);
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    throw error;
   }
 };

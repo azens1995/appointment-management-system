@@ -14,7 +14,7 @@ export const createAppointment = async (
     });
     return HttpSuccess.Created(appointment);
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    throw error;
   }
 };
 
@@ -39,7 +39,7 @@ export const getUserCreatedAppointments = async (
 
     return HttpSuccess.OK(appointments);
   } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
+    throw error;
   }
 };
 
