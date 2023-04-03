@@ -1,6 +1,8 @@
 import { Response, NextFunction, Request } from 'express';
-import * as AppointmentService from '../services/appointment.service';
+import * as appointmentService from '../services/appointment.service';
 import { RequestWithUser } from '@common/interfaces/express.interface';
+import { Result } from '@common/core/Result';
+import { HttpCode } from '@common/exceptions/appError';
 
 export const getUserCreatedAppointments = async (
   req: Request,
@@ -8,12 +10,12 @@ export const getUserCreatedAppointments = async (
   next: NextFunction
 ) => {
   try {
-    const response = await AppointmentService.getUserCreatedAppointments({
+    const data = await appointmentService.getUserCreatedAppointments({
       userId: (req as RequestWithUser).user.id,
       ...req.query
     });
-
-    return res.status(response.status).json(response.data);
+    const responseData = Result.ok(data);
+    return res.status(HttpCode.OK).json(responseData);
   } catch (error) {
     next(error);
   }
@@ -25,12 +27,12 @@ export const createAppointment = async (
   next: NextFunction
 ) => {
   try {
-    const response = await AppointmentService.createAppointment({
+    const data = await appointmentService.createAppointment({
       ...req.body,
       appointmentBy: (req as RequestWithUser).user.id
     });
-
-    return res.status(response.status).json(response.data);
+    const responseData = Result.ok(data);
+    return res.status(HttpCode.CREATED).json(responseData);
   } catch (error) {
     next(error);
   }
@@ -42,12 +44,12 @@ export const updateAppointment = async (
   next: NextFunction
 ) => {
   try {
-    const response = await AppointmentService.updateAppointment(req.params.id, {
+    const data = await appointmentService.updateAppointment(req.params.id, {
       ...req.body,
       appointmentBy: (req as RequestWithUser).user.id
     });
-
-    return res.status(response.status).json(response.data);
+    const responseData = Result.ok(data);
+    return res.status(HttpCode.OK).json(responseData);
   } catch (error) {
     next(error);
   }
@@ -59,12 +61,12 @@ export const deleteAppointment = async (
   next: NextFunction
 ) => {
   try {
-    const response = await AppointmentService.deleteAppointment(
+    const data = await appointmentService.deleteAppointment(
       req.params.id,
       (req as RequestWithUser).user.id
     );
-
-    return res.status(response.status).json(response.data);
+    const responseData = Result.ok(data);
+    return res.status(HttpCode.OK).json(responseData);
   } catch (error) {
     next(error);
   }

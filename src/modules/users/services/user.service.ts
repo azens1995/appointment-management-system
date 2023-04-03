@@ -37,8 +37,7 @@ export const userSignup = async (payload: Prisma.UserCreateInput) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const userData = await createUser({ ...payload, password: hashedPassword });
 
-    const res = mapUserToUserResponse(userData);
-    return HttpSuccess.Created(res);
+    return mapUserToUserResponse(userData);
   } catch (error) {
     throw error;
   }
@@ -79,8 +78,7 @@ export const userSignin = async (payload: Prisma.UserCreateInput) => {
       { expiresIn: '7d' }
     );
 
-    const res = userLoginResponse(existingUser, accessToken, refreshToken);
-    return HttpSuccess.OK(res);
+    return userLoginResponse(existingUser, accessToken, refreshToken);
   } catch (error) {
     throw error;
   }
@@ -94,7 +92,7 @@ export const getUsers = async () => {
   try {
     const users = await fetchUser();
     const userResponse = users.map((user) => mapUserToUserResponse(user));
-    return HttpSuccess.OK(userResponse);
+    return userResponse;
   } catch (error) {
     throw error;
   }

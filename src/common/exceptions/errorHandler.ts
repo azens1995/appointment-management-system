@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import { AppError, HttpCode } from './appError';
+import { Result } from '@common/core/Result';
 
 class ErrorHandler {
   private isTrustedError(error: Error): boolean {
@@ -18,14 +19,14 @@ class ErrorHandler {
   }
 
   private handleTrustedError(error: AppError, response: Response): void {
-    response.status(error.httpCode).json({ message: error.message });
+    const errorData = Result.fail(error.message);
+    response.status(error.httpCode).json(errorData);
   }
 
   private handleCriticalError(error: Error, response?: Response): void {
     if (response) {
-      response
-        .status(HttpCode.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Internal server error' });
+      const errorData = Result.fail('Internal server error');
+      response.status(HttpCode.INTERNAL_SERVER_ERROR).json(errorData);
     }
     console.log('Application encountered a critical error. Exiting');
     process.exit(1);
