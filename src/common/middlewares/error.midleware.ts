@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { errorHanler } from '../exceptions/errorHandler';
+import { errorHandler } from '../exceptions/errorHandler';
 
 export function errorMiddleware(
   err: Error,
@@ -7,5 +7,5 @@ export function errorMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  errorHanler.handleError(err, res);
+  errorHandler.handleError(err, res);
 }

@@ -32,4 +32,4 @@ class ErrorHandler {
   }
 }
 
-export const errorHanler = new ErrorHandler();
+export const errorHandler = new ErrorHandler();
