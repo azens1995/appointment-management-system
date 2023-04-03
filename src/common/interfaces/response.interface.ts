@@ -1,8 +1,6 @@
-import { LooseObject } from './generic.interface';
-
-export interface HttpResponse {
+export interface HttpResponse<T> {
   code: number;
   status: 'success' | 'error';
   message: string;
-  data: LooseObject;
+  data: T;
 }

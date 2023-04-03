@@ -3,12 +3,11 @@ import {
   GENERIC_CREATED_MESSAGE,
   GENERIC_NO_CONTENT_MESSAGE
 } from './../constants/responseMessages';
-import { LooseObject } from '@common/interfaces/generic.interface';
 import { HttpResponse } from '@common/interfaces/response.interface';
 import { GENERIC_SERVER_ERROR_MESSAGE } from 'constants/responseMessages';
 
 export const HttpError = {
-  BadRequest: (message: string, data: LooseObject = {}): HttpResponse => {
+  BadRequest: <T>(message: string, data: T = {} as T): HttpResponse<T> => {
     return {
       code: 400,
       status: 'error',
@@ -17,7 +16,7 @@ export const HttpError = {
     };
   },
 
-  UnAuthorized: (message: string, data: LooseObject = {}): HttpResponse => {
+  UnAuthorized: <T>(message: string, data: T = {} as T): HttpResponse<T> => {
     return {
       code: 401,
       status: 'error',
@@ -26,7 +25,7 @@ export const HttpError = {
     };
   },
 
-  Forbidden: (message: string, data: LooseObject = {}): HttpResponse => {
+  Forbidden: <T>(message: string, data: T = {} as T): HttpResponse<T> => {
     return {
       code: 403,
       status: 'error',
@@ -35,7 +34,7 @@ export const HttpError = {
     };
   },
 
-  NotFound: (message: string, data: LooseObject = {}): HttpResponse => {
+  NotFound: <T>(message: string, data: T = {} as T): HttpResponse<T> => {
     return {
       code: 404,
       status: 'error',
@@ -44,7 +43,7 @@ export const HttpError = {
     };
   },
 
-  Conflict: (message: string, data: LooseObject = {}): HttpResponse => {
+  Conflict: <T>(message: string, data: T = {} as T): HttpResponse<T> => {
     return {
       code: 409,
       status: 'error',
@@ -53,7 +52,7 @@ export const HttpError = {
     };
   },
 
-  ValidationError: (message: string, data: LooseObject = {}): HttpResponse => {
+  ValidationError: <T>(message: string, data: T = {} as T): HttpResponse<T> => {
     return {
       code: 422,
       status: 'error',
@@ -62,10 +61,10 @@ export const HttpError = {
     };
   },
 
-  ServerError: (
+  ServerError: <T>(
     message: string = GENERIC_SERVER_ERROR_MESSAGE,
-    data: LooseObject = {}
-  ): HttpResponse => {
+    data: T = {} as T
+  ): HttpResponse<T> => {
     return {
       code: 500,
       status: 'error',
@@ -76,10 +75,10 @@ export const HttpError = {
 };
 
 export const HttpSuccess = {
-  OK: (
-    data: LooseObject = {},
-    message = GENERIC_OK_RESPONSE_MESSAGE
-  ): HttpResponse => {
+  OK: <T>(
+    data: T = {} as T,
+    message: string = GENERIC_OK_RESPONSE_MESSAGE
+  ): HttpResponse<T> => {
     return {
       code: 200,
       status: 'success',
@@ -88,10 +87,10 @@ export const HttpSuccess = {
     };
   },
 
-  Created: (
-    data: LooseObject,
-    message = GENERIC_CREATED_MESSAGE
-  ): HttpResponse => {
+  Created: <T>(
+    data: T,
+    message: string = GENERIC_CREATED_MESSAGE
+  ): HttpResponse<T> => {
     return {
       code: 201,
       status: 'success',
@@ -100,10 +99,10 @@ export const HttpSuccess = {
     };
   },
 
-  NoContent: (
-    data: LooseObject = {},
-    message = GENERIC_NO_CONTENT_MESSAGE
-  ): HttpResponse => {
+  NoContent: <T>(
+    data: T = {} as T,
+    message: string = GENERIC_NO_CONTENT_MESSAGE
+  ): HttpResponse<T> => {
     return {
       code: 204,
       status: 'success',
