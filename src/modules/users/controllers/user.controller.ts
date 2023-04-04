@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { userSignup, userSignin, getUsers } from '../services/user.service';
+import { Result } from '@common/core/Result';
+import { HttpCode } from '@common/exceptions/appError';
 
 /**
  * Function to handle user signup
@@ -9,9 +11,9 @@ import { userSignup, userSignin, getUsers } from '../services/user.service';
  * @returns {Promise<Response>}
  */
 export const signup = async (req: Request, res: Response) => {
-  const response = await userSignup(req.body);
-
-  return res.status(response.status).json(response.data);
+  const data = await userSignup(req.body);
+  const responseData = Result.ok(data);
+  return res.status(HttpCode.CREATED).json(responseData);
 };
 
 /**
@@ -22,9 +24,9 @@ export const signup = async (req: Request, res: Response) => {
  * @returns {Promise<Response>}
  */
 export const signin = async (req: Request, res: Response) => {
-  const response = await userSignin(req.body);
-
-  return res.status(response.status).json(response.data);
+  const data = await userSignin(req.body);
+  const responseData = Result.ok(data);
+  return res.status(HttpCode.OK).json(responseData);
 };
 
 /**
@@ -35,7 +37,7 @@ export const signin = async (req: Request, res: Response) => {
  * @returns {Promise<Response>}
  */
 export const get = async (req: Request, res: Response) => {
-  const response = await getUsers();
-
-  return res.status(response.status).json(response.data);
+  const data = await getUsers();
+  const responseData = Result.ok(data);
+  return res.status(HttpCode.OK).json(responseData);
 };
