@@ -3,7 +3,15 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest'
   },
   testEnvironment: 'node',
-  testRegex: './src/.*\\.(test|spec)?\\.(ts|ts)$',
+  testRegex: './tests/.*\\.(test|spec)?\\.(ts|ts)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  roots: ['<rootDir>/src']
+  roots: ['<rootDir>/tests'],
+  moduleNameMapper: {
+    '^@common/(.*)': '<rootDir>/src/common/$1',
+    '^@modules/(.*)': '<rootDir>/src/modules/$1',
+    '^@utils/(.*)': '<rootDir>/src/utils/$1',
+    '^@config/(.*)': '<rootDir>/src/config/$1',
+    '^@tests/(.*)': '<rootDir>/tests/$1'
+  },
+  setupFilesAfterEnv: ['<rootDir>/tests/prismaTestSetup.ts']
 };
