@@ -11,7 +11,7 @@ module.exports = {
     '^@modules/(.*)': '<rootDir>/src/modules/$1',
     '^@utils/(.*)': '<rootDir>/src/utils/$1',
     '^@config/(.*)': '<rootDir>/src/config/$1',
-    '^@prismaTestSetup': '<rootDir>/tests/prismaTestSetup'
+    '^@tests/(.*)': '<rootDir>/tests/$1'
   },
   setupFilesAfterEnv: ['<rootDir>/tests/prismaTestSetup.ts']
 };

@@ -20,7 +20,7 @@
       "@config/*": ["config/*"],
       "@modules/*": ["modules/*"],
       "@utils/*": ["utils/*"],
-      "@prismaTestSetup": ["../tests/prismaTestSetup"]
+      "@tests/*": ["../tests/*"]
     }
   },
   "include": ["src/*.ts", "src/**/*.ts", "src/**/*.js", "tests/**/*.ts"],
