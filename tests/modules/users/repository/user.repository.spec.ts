@@ -16,8 +16,8 @@ const mockDataStore = [
     address: '123 Main St, Anytown USA',
     isActive: true,
     isVerified: true,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    createdAt: new Date('2023-04-05'),
+    updatedAt: new Date('2023-04-05')
   },
   {
     id: '2',
@@ -28,10 +28,14 @@ const mockDataStore = [
     address: '456 Oak St, Anytown USA',
     isActive: false,
     isVerified: true,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    createdAt: new Date('2023-04-05'),
+    updatedAt: new Date('2023-04-05')
   }
 ] as User[];
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('createUser function', () => {
   const mockUserData = {
@@ -48,11 +52,7 @@ describe('createUser function', () => {
   //@ts-ignore
   const mockCreate = prismaMock.user.create;
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  test('should call prisma.user.create with the correct arguments', async () => {
+  test('it should call create user with the correct arguments', async () => {
     //Arrange
     const expectedUserData = mockDataStore[0];
     mockCreate.mockResolvedValueOnce(expectedUserData);
@@ -76,10 +76,6 @@ describe('createUser function', () => {
 
 describe('fetchUser function', () => {
   const mockFindMany = prismaMock.user.findMany;
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
 
   test('should call prisma.user.findMany and return the user data', async () => {
     //Arrange
@@ -105,10 +101,6 @@ describe('fetchUser function', () => {
 
 describe('getExistingUser function', () => {
   const mockFindUnique = prismaMock.user.findUnique;
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
 
   test('should call prisma.user.findUnique with the given email and return the existing user data', async () => {
     //Arrange
