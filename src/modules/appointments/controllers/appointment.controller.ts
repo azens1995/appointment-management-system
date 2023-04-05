@@ -38,6 +38,23 @@ export const createAppointment = async (
   }
 };
 
+export const getAppointment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const data = await appointmentService.getAppointment(
+      req.params.id,
+      (req as RequestWithUser).user.id
+    );
+    const responseData = Result.ok(data);
+    return res.status(HttpCode.OK).json(responseData);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const updateAppointment = async (
   req: Request,
   res: Response,

@@ -42,6 +42,26 @@ export const getUserCreatedAppointments = async (
   }
 };
 
+export const getAppointment = async (appointmentId: string, userId: string) => {
+  try {
+    const appointment = await AppointmentRepository.getAppointmentById(
+      appointmentId
+    );
+    if (
+      !appointment ||
+      ![appointment.appointmentBy, appointment.appointmentFor].includes(userId)
+    ) {
+      throw AppError.notFound(
+        `Appointment with Id ${appointmentId} could not be found.`
+      );
+    }
+
+    return appointment;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const updateAppointment = async (
   appointmentId: string,
   payload: Prisma.AppointmentUncheckedUpdateInput
