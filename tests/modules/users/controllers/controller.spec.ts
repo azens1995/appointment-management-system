@@ -36,22 +36,25 @@ describe('signup controller', () => {
     jest.clearAllMocks();
   });
 
+  //Success case
   test('should call userSignup with the correct arguments', async () => {
+    //Arrange
     const mockUserSignup = userSignup as jest.MockedFunction<typeof userSignup>;
-
     mockUserSignup.mockResolvedValueOnce(mockUserData);
-
+    //Act
     await signup(mockReq as Request, mockRes as Response);
-
+    //Assert
     expect(mockUserSignup).toHaveBeenCalledWith(mockReq.body);
   });
 
+  //Success case
   test('should return the correct response with status 201', async () => {
+    //Arrange
     const mockUserSignup = userSignup as jest.MockedFunction<typeof userSignup>;
     mockUserSignup.mockResolvedValueOnce(mockUserData);
-
+    //Act
     await signup(mockReq as Request, mockRes as Response);
-
+    //Assert
     expect(mockRes.status).toHaveBeenCalledWith(HttpCode.CREATED);
     expect(mockRes.json).toHaveBeenCalledWith(Result.ok(mockUserData));
   });

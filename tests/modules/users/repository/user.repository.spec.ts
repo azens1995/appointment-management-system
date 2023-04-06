@@ -2,7 +2,7 @@ import {
   createUser,
   fetchUser,
   getExistingUser
-} from '@modules/users/repository/user.repository';
+} from '@/modules/users/repository/user.repository';
 import { User } from '@prisma/client';
 import { prismaMock } from '@tests/prismaTestSetup';
 
@@ -52,6 +52,7 @@ describe('createUser function', () => {
   //@ts-ignore
   const mockCreate = prismaMock.user.create;
 
+  //Success case
   test('it should call create user with the correct arguments', async () => {
     //Arrange
     const expectedUserData = mockDataStore[0];
@@ -63,6 +64,7 @@ describe('createUser function', () => {
     expect(result).toEqual(expectedUserData);
   });
 
+  //Error case
   test('should throw an error if prisma.user.create throws an error', async () => {
     //Arrange
     const errorMessage = 'Failed to create user';
@@ -77,6 +79,7 @@ describe('createUser function', () => {
 describe('fetchUser function', () => {
   const mockFindMany = prismaMock.user.findMany;
 
+  //Success case
   test('should call prisma.user.findMany and return the user data', async () => {
     //Arrange
     const mockData = mockDataStore;
@@ -88,6 +91,7 @@ describe('fetchUser function', () => {
     expect(result).toEqual(mockData);
   });
 
+  //Error case
   test('should throw an error if prisma.user.findMany throws an error', async () => {
     //Arrange
     const errorMessage = 'Failed to fetch user data';
@@ -102,6 +106,7 @@ describe('fetchUser function', () => {
 describe('getExistingUser function', () => {
   const mockFindUnique = prismaMock.user.findUnique;
 
+  //Success case
   test('should call prisma.user.findUnique with the given email and return the existing user data', async () => {
     //Arrange
     const email = 'john.doe@example.com';
@@ -114,6 +119,7 @@ describe('getExistingUser function', () => {
     expect(result).toEqual(mockData);
   });
 
+  //Success case
   test('should return null if prisma.user.findUnique returns null', async () => {
     //Arrange
     const email = 'jane.doe@example.com';
@@ -125,6 +131,7 @@ describe('getExistingUser function', () => {
     expect(result).toBeNull();
   });
 
+  //Error case
   test('should throw an error if prisma.user.findUnique throws an error', async () => {
     //Arrange
     const email = 'jane.doe@example.com';
