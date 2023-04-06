@@ -20,7 +20,9 @@ CREATE TABLE "Appointment" (
     "id" TEXT NOT NULL,
     "title" VARCHAR(50) NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
+    "appointmentByUser" TEXT NOT NULL,
     "appointmentBy" VARCHAR(250) NOT NULL,
+    "appointmentForUser" TEXT NOT NULL,
     "appointmentFor" VARCHAR(250) NOT NULL,
     "isConfirmed" BOOLEAN,
     "purpose" TEXT,
@@ -32,23 +34,5 @@ CREATE TABLE "Appointment" (
     CONSTRAINT "Appointment_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "Token" (
-    "id" TEXT NOT NULL,
-    "type" VARCHAR(50) NOT NULL,
-    "expiryDate" TIMESTAMP(3) NOT NULL,
-    "token" VARCHAR(250) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Token_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- AddForeignKey
-ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_appointmentBy_fkey" FOREIGN KEY ("appointmentBy") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_appointmentFor_fkey" FOREIGN KEY ("appointmentFor") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

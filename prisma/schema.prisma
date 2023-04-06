@@ -22,17 +22,13 @@ model User {
   isVerified            Boolean       @default(false)
   createdAt             DateTime      @default(now())
   updatedAt             DateTime      @updatedAt
-  requestedAppointments Appointment[] @relation("appointmentBy")
-  invitedAppointments   Appointment[] @relation("appointmentFor")
 }
 
 model Appointment {
   id                 String   @id @default(uuid())
   title              String   @db.VarChar(50)
   date               DateTime
-  appointmentByUser  User     @relation("appointmentBy", fields: [appointmentBy], references: [id])
   appointmentBy      String   @db.VarChar(250)
-  appointmentForUser User     @relation("appointmentFor", fields: [appointmentFor], references: [id])
   appointmentFor     String   @db.VarChar(250)
   isConfirmed        Boolean?
   purpose            String?
@@ -40,13 +36,4 @@ model Appointment {
   isCancelled        Boolean  @default(false)
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
-}
-
-model Token {
-  id         String   @id @default(uuid())
-  type       String   @db.VarChar(50)
-  expiryDate DateTime
-  token      String   @db.VarChar(250)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
 }
