@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import { ACCESS_TOKEN_SECRET_KEY } from '../../../config/appConfig';
+import { ACCESS_TOKEN_SECRET_KEY } from '../../config/appConfig';
 
 const ACCESS_TOKEN: string = ACCESS_TOKEN_SECRET_KEY;
 
@@ -29,6 +29,6 @@ export const auth = (
       return res.status(401).json({ message: 'Unauthorized User' });
     }
   } catch (error) {
-    return res.status(401).json({ message: 'Unauthorized User' });
+    next(error);
   }
 };

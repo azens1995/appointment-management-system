@@ -1,12 +1,12 @@
 import express, { Express } from 'express';
 import 'express-async-errors';
 
-import { auth } from './modules/users/middlewares/auth';
-import userRouter from './modules/users/routes/user.route';
-import appointmentRouter from './modules/appointments/routes/appointment.route';
-import loggerMiddleware from './common/middlewares/logger.middleware';
-import healthCheckRouter from './modules/healthCheck/routes/route';
-import { errorMiddleware } from './common/middlewares/error.midleware';
+import { auth } from '@common/middlewares/auth';
+import userRouter from '@modules/users/routes/user.route';
+import appointmentRouter from '@modules/appointments/routes/appointment.route';
+import loggerMiddleware from '@common/middlewares/logger.middleware';
+import healthCheckRouter from '@modules/healthCheck/routes/route';
+import { errorMiddleware } from '@common/middlewares/error.midleware';
 
 const app: Express = express();
 app.use(express.json());
