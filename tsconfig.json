@@ -14,13 +14,14 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@common/*": ["common/*"],
-      "@config/*": ["config/*"],
-      "@modules/*": ["modules/*"],
-      "@utils/*": ["utils/*"],
-      "@tests/*": ["../tests/*"]
+      "@/*": ["src/*"],
+      "@common/*": ["src/common/*"],
+      "@config/*": ["src/config/*"],
+      "@modules/*": ["src/modules/*"],
+      "@utils/*": ["src/utils/*"],
+      "@tests/*": ["tests/*"]
     }
   },
   "include": ["src/*.ts", "src/**/*.ts", "src/**/*.js", "tests/**/*.ts"],
