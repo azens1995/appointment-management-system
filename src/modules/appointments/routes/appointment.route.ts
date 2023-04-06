@@ -16,6 +16,8 @@ appointmentRouter.post(
 
 appointmentRouter.get('/', AppointmentController.getUserCreatedAppointments);
 
+appointmentRouter.get('/:id', AppointmentController.getAppointment);
+
 appointmentRouter.post(
   '/:id',
   validate(appointmentUpdateValidator),
