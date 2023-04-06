@@ -36,3 +36,20 @@ The main purpose of this project is to create the playground for the unit testin
 Every time you make changes to `prisma/schema.prisma` make sure to run above commands.
 
 For seeding run `npm run prisma:seed`
+
+## Challenges
+
+The application architecture follows the following structure:
+
+- Route
+- Controller
+- Service
+- Repository
+
+For the unit testing, one can begin mocking and spying the PrismaClient to test the repository layer.
+
+1. For repository layer testing, it is recommended to use the jest-mock to mock the PrismaClient.
+
+2. For Service layer testing, it is recommended to use the Jest/SinonJS for mocking and spying.
+
+3. For API testing, it is recommended to use supertest.
