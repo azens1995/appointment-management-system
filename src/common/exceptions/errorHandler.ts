@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { AppError, HttpCode } from './appError';
 import { Result } from '@common/core/Result';
+import logger from '@/utils/logger';
 
 class ErrorHandler {
   private isTrustedError(error: Error): boolean {
@@ -28,7 +29,7 @@ class ErrorHandler {
       const errorData = Result.fail('Internal server error');
       response.status(HttpCode.INTERNAL_SERVER_ERROR).json(errorData);
     }
-    console.log('Application encountered a critical error. Exiting');
+    logger.warn('Application encountered a critical error. Exiting');
     process.exit(1);
   }
 }

@@ -1,5 +1,6 @@
-import { Prisma } from '@prisma/client';
+import { Appointment, Prisma } from '@prisma/client';
 import prisma from '@config/client';
+import logger from '@/utils/logger';
 
 // CREATE an appointment
 export async function createAppointment(

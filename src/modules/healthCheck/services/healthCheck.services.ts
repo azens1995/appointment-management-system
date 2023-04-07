@@ -1,16 +1,12 @@
-import { HttpError, HttpSuccess } from '../../../utils/message';
+import { SystemHealth } from '@modules/healthCheck/dto/systemhealth.dto';
 
 export const getHealthCheck = async () => {
-  try {
-    const healthcheck = {
-      uptime: process.uptime(),
-      responsetime: process.hrtime(),
-      message: 'OK',
-      timestamp: Date.now()
-    };
+  const healthcheck = {
+    uptime: process.uptime(),
+    responsetime: process.hrtime(),
+    message: 'System is up.',
+    timestamp: Date.now()
+  } as SystemHealth;
 
-    return HttpSuccess.OK(healthcheck);
-  } catch (error) {
-    return HttpError.BadRequest('Something went wrong.');
-  }
+  return healthcheck;
 };

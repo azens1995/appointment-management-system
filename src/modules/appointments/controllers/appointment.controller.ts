@@ -1,24 +1,22 @@
-import { Response, NextFunction, Request } from 'express';
-import * as appointmentService from '../services/appointment.service';
-import { RequestWithUser } from '@common/interfaces/express.interface';
 import { Result } from '@common/core/Result';
 import { HttpCode } from '@common/exceptions/appError';
+import { Response, NextFunction, Request } from 'express';
+import { RequestWithUser } from '@common/interfaces/express.interface';
+import * as appointmentService from '@modules/appointments/services/appointment.service';
+import { log } from 'console';
+import logger from '@/utils/logger';
 
 export const getUserCreatedAppointments = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const data = await appointmentService.getUserCreatedAppointments({
-      userId: (req as RequestWithUser).user.id,
-      ...req.query
-    });
-    const responseData = Result.ok(data);
-    return res.status(HttpCode.OK).json(responseData);
-  } catch (error) {
-    next(error);
-  }
+  const data = await appointmentService.getUserCreatedAppointments({
+    userId: (req as RequestWithUser).user.id,
+    ...req.query
+  });
+  const responseData = Result.ok(data);
+  return res.status(HttpCode.OK).json(responseData);
 };
 
 export const createAppointment = async (
@@ -26,16 +24,12 @@ export const createAppointment = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const data = await appointmentService.createAppointment({
-      ...req.body,
-      appointmentBy: (req as RequestWithUser).user.id
-    });
-    const responseData = Result.ok(data);
-    return res.status(HttpCode.CREATED).json(responseData);
-  } catch (error) {
-    next(error);
-  }
+  const data = await appointmentService.createAppointment({
+    ...req.body,
+    appointmentBy: (req as RequestWithUser).user.id
+  });
+  const responseData = Result.ok(data);
+  return res.status(HttpCode.CREATED).json(responseData);
 };
 
 export const getAppointment = async (
@@ -43,16 +37,12 @@ export const getAppointment = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const data = await appointmentService.getAppointment(
-      req.params.id,
-      (req as RequestWithUser).user.id
-    );
-    const responseData = Result.ok(data);
-    return res.status(HttpCode.OK).json(responseData);
-  } catch (error) {
-    next(error);
-  }
+  const data = await appointmentService.getAppointment(
+    req.params.id,
+    (req as RequestWithUser).user.id
+  );
+  const responseData = Result.ok(data);
+  return res.status(HttpCode.OK).json(responseData);
 };
 
 export const updateAppointment = async (
@@ -60,16 +50,12 @@ export const updateAppointment = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const data = await appointmentService.updateAppointment(req.params.id, {
-      ...req.body,
-      appointmentBy: (req as RequestWithUser).user.id
-    });
-    const responseData = Result.ok(data);
-    return res.status(HttpCode.OK).json(responseData);
-  } catch (error) {
-    next(error);
-  }
+  const data = await appointmentService.updateAppointment(req.params.id, {
+    ...req.body,
+    appointmentBy: (req as RequestWithUser).user.id
+  });
+  const responseData = Result.ok(data);
+  return res.status(HttpCode.OK).json(responseData);
 };
 
 export const deleteAppointment = async (
@@ -77,14 +63,10 @@ export const deleteAppointment = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const data = await appointmentService.deleteAppointment(
-      req.params.id,
-      (req as RequestWithUser).user.id
-    );
-    const responseData = Result.ok(data);
-    return res.status(HttpCode.OK).json(responseData);
-  } catch (error) {
-    next(error);
-  }
+  const data = await appointmentService.deleteAppointment(
+    req.params.id,
+    (req as RequestWithUser).user.id
+  );
+  const responseData = Result.ok(data);
+  return res.status(HttpCode.OK).json(responseData);
 };
