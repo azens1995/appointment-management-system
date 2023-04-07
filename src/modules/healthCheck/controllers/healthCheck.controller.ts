@@ -1,5 +1,7 @@
+import { Result } from '@/common/core/Result';
+import { HttpCode } from '@/common/exceptions/appError';
 import { Request, Response, NextFunction } from 'express';
-import { getHealthCheck } from '../services/healthCheck.services';
+import { getHealthCheck } from '@modules/healthCheck/services/healthCheck.services';
 
 /**
  * Function to handle user server healthcheck
@@ -13,11 +15,7 @@ export const getCheck = async (
   res: Response,
   next: NextFunction
 ): Promise<Response | void> => {
-  try {
-    const response = await getHealthCheck();
-
-    return res.status(response.status).json(response.data);
-  } catch (error) {
-    next(error);
-  }
+  const healthInfo = await getHealthCheck();
+  const responseData = Result.ok(healthInfo);
+  return res.status(HttpCode.OK).json(responseData);
 };
