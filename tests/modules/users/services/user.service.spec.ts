@@ -34,7 +34,9 @@ describe('userSignup', () => {
     //Act
     const responsePromise = userSignup(payload);
     //Assert
-    await expect(responsePromise).rejects.toThrow(AppError);
+    await expect(responsePromise).rejects.toThrow(
+      AppError.badRequest(`User already exists with email ${email}`)
+    );
     sinon.assert.calledWith(getExistingUserStub, email);
   });
 
@@ -45,7 +47,9 @@ describe('userSignup', () => {
     const hashedPassword = '@hashedPassword';
     sinon.stub(bcrypt, 'hash').resolves(hashedPassword);
     sinon.stub(Mappers, 'mapUserToUserResponse');
-    const createUserStub = sinon.stub(UserRepositiory, 'createUser');
+    const createUserStub = sinon
+      .stub(UserRepositiory, 'createUser')
+      .resolves(payload);
     //Act
     await userSignup(payload);
     //Assert
@@ -61,7 +65,9 @@ describe('userSignup', () => {
     //Arrange
     sinon.stub(UserRepositiory, 'getExistingUser').resolves(null);
     const errorMessage = 'User creation failed';
-    sinon.stub(UserRepositiory, 'createUser').rejects(new Error(errorMessage));
+    sinon
+      .stub(UserRepositiory, 'createUser')
+      .rejects(AppError.badRequest(errorMessage));
     //Act
     const responsePromise = userSignup(payload);
     //Assert
@@ -102,7 +108,11 @@ describe('userSignin', () => {
     //Act
     const responsePromise = userSignin(payload);
     //Assert
-    await expect(responsePromise).rejects.toThrow(AppError);
+    await expect(responsePromise).rejects.toThrow(
+      AppError.badRequest(
+        `User with email: ${email} is not registered in our system. Please use registered email to login into the system.`
+      )
+    );
     sinon.assert.calledWith(getExistingUserStub, email);
   });
 
@@ -114,7 +124,11 @@ describe('userSignin', () => {
     //Act
     const responsePromise = userSignin(payload);
     //Assert
-    await expect(responsePromise).rejects.toThrow(AppError);
+    await expect(responsePromise).rejects.toThrow(
+      AppError.badRequest(
+        `Email or password did not match. Please check your credentials`
+      )
+    );
   });
 
   //Success case
@@ -208,7 +222,9 @@ describe('getUsers', () => {
   test('it should throw an error if fetchUser fails', async () => {
     //Arrange
     const errorMessage = "Couldn't fetch users";
-    sinon.stub(UserRepositiory, 'fetchUser').rejects(new Error(errorMessage));
+    sinon
+      .stub(UserRepositiory, 'fetchUser')
+      .rejects(AppError.badRequest(errorMessage));
     //Act
     const responsePromise = getUsers();
     //Assert
