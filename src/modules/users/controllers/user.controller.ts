@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
-import { userSignup, userSignin, getUsers } from '../services/user.service';
 import { Result } from '@common/core/Result';
 import { HttpCode } from '@common/exceptions/appError';
+import {
+  userSignup,
+  userSignin,
+  getUsers
+} from '@modules/users/services/user.service';
 
 /**
  * Function to handle user signup
