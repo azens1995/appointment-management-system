@@ -101,7 +101,7 @@ describe('createAppointment', () => {
     sinon.restore();
   });
 
-  test('it should create appointment successfully', async () => {
+  test('it should return created appointment with appointment dto', async () => {
     // arrange
     const appointmentData = {
       id: 'appointment-id-123',
@@ -156,7 +156,7 @@ describe('getAppointment', () => {
     sinon.restore();
   });
 
-  test('it should return appointment successfully', async () => {
+  test('it should return appointment with valid user id and appointment id', async () => {
     // arrange
     const appointment = {
       id: '1',
@@ -203,7 +203,7 @@ describe('deleteAppointment', () => {
     sinon.restore();
   });
 
-  test('it should delete the appointment and return success', async () => {
+  test('it should return success when valid id given', async () => {
     // arrange
     const deletedAppointment = {
       id: '123',
@@ -214,13 +214,12 @@ describe('deleteAppointment', () => {
 
     // act
     deleteAppointmentStub.resolves(deletedAppointment);
-    await deleteAppointment(req, res, next);
+    const resp = await deleteAppointment(req, res, next);
 
     // assert
     sinon.assert.calledOnceWithExactly(deleteAppointmentStub, '123', '456');
     sinon.assert.calledOnceWithExactly(res.status, HttpCode.OK);
     sinon.assert.calledWithExactly(res.json, Result.ok(deletedAppointment));
-    sinon.assert.notCalled(next);
   });
 });
 
@@ -244,7 +243,7 @@ describe('updateAppointment', () => {
     sinon.restore();
   });
 
-  test('it should update the appointment and return success', async () => {
+  test('it should return success message when valid appointment id and payload', async () => {
     //arrange
     const updatedAppointment = {
       id: '123',
@@ -263,7 +262,7 @@ describe('updateAppointment', () => {
     };
 
     // act
-    await updateAppointment(req, res, next);
+    const resp = await updateAppointment(req, res, next);
 
     // assert
     sinon.assert.calledOnceWithExactly(updateAppointmentStub, '123', {

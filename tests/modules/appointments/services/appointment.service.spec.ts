@@ -41,7 +41,7 @@ describe('createAppointment', () => {
     sinon.assert.calledWith(createAppointmentStub, expectedPayload);
   });
 
-  test('it should throw an error when createAppointment fails', async () => {
+  test('it should throw an error when appointment creation fails', async () => {
     const payload = {
       date: '2023-04-07T10:00:00.000Z',
       title: 'Test appointment',
@@ -92,7 +92,7 @@ describe('getUserCreatedAppointments', () => {
     sinon.assert.calledWith(getUserCreatedAppointmentsStub, ...expectedPayload);
   });
 
-  test('it should throw error with non-existing appointment', async () => {
+  test('it should throw error with for non-existing appointment', async () => {
     // arrange
     const payload = {
       userId: '2',
@@ -226,7 +226,7 @@ describe('updateAppointment', () => {
     sinon.restore();
   });
 
-  test('it should update appointment with the correct payload', async () => {
+  test('it should return updated appointment with the correct payload', async () => {
     // arrange
     const appointmentId = '1';
 
@@ -390,7 +390,7 @@ describe('deleteAppointment', () => {
     sinon.restore();
   });
 
-  test('it should delete the appointment successfully', async () => {
+  test('it should return  successful message', async () => {
     // arrange
     const appointmentRepositoryStub = sinon
       .stub(AppointmentRepository, 'deleteAppointmentById')
@@ -432,7 +432,8 @@ describe('deleteAppointment', () => {
     sinon.assert.calledOnceWithExactly(getAppointmentByIdStub, appointmentId);
   });
 
-  describe('it should throw an error when deleting the appointment fails', async () => {
+
+  test('it should throw an error when deleting the appointment fails', async () => {
     // arrange
     const error = new Error('Database connection error');
     const appointmentRepositoryStub = sinon

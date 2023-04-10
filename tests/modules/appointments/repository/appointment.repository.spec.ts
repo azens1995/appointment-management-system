@@ -24,7 +24,7 @@ describe('createAppointment', () => {
     jest.clearAllMocks();
   });
 
-  test('it should create user with the correct arguments', async () => {
+  test('it should return created appointment with the valid appointment payload', async () => {
     // arrange
     const expectedAppointMentData: Prisma.AppointmentUncheckedCreateInput = {
       id: '1',
@@ -63,37 +63,28 @@ describe('updateAppointment', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
-  test('it should call prisma.appointment.updateMany with the correct arguments', async () => {
+  test('it should return updated appointment count', async () => {
     // arrange
-    const expectedAppointment = {
-      id: '1',
-      title: 'Hello',
-      date: new Date(),
-      appointmentBy: '1',
-      appointmentFor: '1',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
+    const expectedAppointmentCount = [1];
 
-    appointmentMockUpdateMany.mockResolvedValueOnce(
-      expectedAppointment as Prisma.PromiseReturnType<any>
-    );
+    appointmentMockUpdateMany.mockResolvedValueOnce({
+      count: expectedAppointmentCount[0]
+    });
 
     // act
-    const appointmentResult = await updateAppointmentById(
-      '1',
-      mockAppointmentData
+    const appointmentCount = Object.values(
+      await updateAppointmentById('1', mockAppointmentData)
     );
 
     // assert
     expect(appointmentMockUpdateMany).toHaveBeenCalledWith({
-      where: { id: '1', appointmentBy: '1' },
+      where: { id: '1', appointmentBy: mockAppointmentData.appointmentBy },
       data: mockAppointmentData
     });
-    expect(appointmentResult).toEqual(expectedAppointment);
+    expect(appointmentCount).toEqual(expectedAppointmentCount);
   });
 });
+
 describe('findById', () => {
   const mockAppointment: Prisma.AppointmentUncheckedCreateInput = {
     id: '1',
@@ -109,7 +100,7 @@ describe('findById', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  test('it should find appointment with the correct argument', async () => {
+  test('it should return appointment with given id, if the payload is correct', async () => {
     // arrange
     mockFindUnique.mockResolvedValueOnce(mockAppointment as Appointment);
 
@@ -123,7 +114,7 @@ describe('findById', () => {
     expect(result).toEqual(mockAppointment);
   });
 
-  test('it should return null if appointment does not exist', async () => {
+  test('it should return null for non-existing appoints', async () => {
     // arrange
     mockFindUnique.mockResolvedValueOnce(null);
 
@@ -153,7 +144,7 @@ describe('getAppointmentByUserId', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  test('it should find user by id provided', async () => {
+  test('it should return array of appointments when correct payload is provided ', async () => {
     // arrange
     mockFindMany.mockResolvedValueOnce([mockAppointment] as Appointment[]);
 
@@ -183,7 +174,7 @@ describe('getAppointmentById', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  test('it should get appointment by id with the correct arguments provided', async () => {
+  test('it should return list of appointments when the correct arguments provided', async () => {
     const mockUserId = '1';
     const mockLimit = 10;
     const mockPage = 1;
@@ -251,25 +242,24 @@ describe('deleteAppointmentById', () => {
     });
   });
 
-  test('it should return the deleted appointment', async () => {
+  test('it should return the count of deleted appointments', async () => {
     // arrange
     const appointmentId = '1';
     const userId = '1';
-    const expectedDeletedAppointment = {
-      id: appointmentId,
-      title: 'Hello',
-      date: new Date(),
-      appointmentBy: userId,
-      appointmentFor: '2'
-    };
+    const expectedDeletedCount = [1];
 
-    mockDeleteMany.mockResolvedValueOnce(expectedDeletedAppointment as any);
+    mockDeleteMany.mockResolvedValueOnce({
+      count: expectedDeletedCount[0]
+    });
 
     // act
-    const result = await deleteAppointmentById(appointmentId, userId);
+    const deletedCount = Object.values(await deleteAppointmentById(appointmentId, userId));
 
     // assert
-    expect(result).toEqual(expectedDeletedAppointment);
+    expect(mockDeleteMany).toHaveBeenCalledWith({
+      where: { id: appointmentId, appointmentBy: userId }
+    });
+    expect(deletedCount).toEqual(expectedDeletedCount);
   });
 
   test('it should return null if no appointment was deleted', async () => {
