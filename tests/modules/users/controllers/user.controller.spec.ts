@@ -45,7 +45,6 @@ describe('signup controller', () => {
     updatedAt: new Date()
   };
 
-  //Success case
   test('should call userSignup with the correct arguments', async () => {
     //Arrange
     const mockUserSignup = userSignup as jest.MockedFunction<typeof userSignup>;
@@ -56,7 +55,6 @@ describe('signup controller', () => {
     expect(mockUserSignup).toHaveBeenCalledWith(mockReq.body);
   });
 
-  //Success case
   test('should return the correct response with status 201', async () => {
     //Arrange
     const mockUserSignup = userSignup as jest.MockedFunction<typeof userSignup>;
@@ -89,7 +87,6 @@ describe('signin controller', () => {
     refreshToken: 'john.doe@example.com'
   } as LoginResponse;
 
-  //Success case
   test('should call userSignin with the correct arguments', async () => {
     //Arrange
     const mockuserSignin = userSignin as jest.MockedFunction<typeof userSignin>;
@@ -100,7 +97,6 @@ describe('signin controller', () => {
     expect(mockuserSignin).toHaveBeenCalledWith(mockReq.body);
   });
 
-  //Success case
   test('should return the correct response with status 200', async () => {
     //Arrange
     const mockuserSignin = userSignin as jest.MockedFunction<typeof userSignin>;
@@ -147,7 +143,6 @@ describe('getUsers controller', () => {
     }
   ];
 
-  //Success case
   test('should call getUsers with the correct arguments', async () => {
     //Arrange
     const mockGetUsers = getUsers as jest.MockedFunction<typeof getUsers>;
@@ -158,7 +153,6 @@ describe('getUsers controller', () => {
     expect(mockGetUsers).toHaveBeenCalled();
   });
 
-  //Success case
   test('should return the correct response with status 200', async () => {
     //Arrange
     const mockGetUsers = getUsers as jest.MockedFunction<typeof getUsers>;

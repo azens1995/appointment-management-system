@@ -2,7 +2,6 @@ import sinon from 'sinon';
 import * as Mappers from '@modules/users/mappers/userResponseMapper';
 
 describe('mapUserToUserResponse', () => {
-  //Success case
   test('it should map a user to a user response', () => {
     //Arrange
     const user = {
@@ -40,7 +39,6 @@ describe('mapUserToUserResponse', () => {
 });
 
 describe('userLoginResponse', () => {
-  //Success case
   test('it should return a LoginResponse object with the correct properties', () => {
     //Arrange
     const user = {

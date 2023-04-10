@@ -25,7 +25,6 @@ describe('userSignup', () => {
     address: '123 Main St, Anytown USA'
   };
 
-  //Error case
   test('it should throw an error if user already exists', async () => {
     //Arrange
     const getExistingUserStub = sinon
@@ -40,8 +39,7 @@ describe('userSignup', () => {
     sinon.assert.calledWith(getExistingUserStub, email);
   });
 
-  //Success case
-  test('it should call createUser with hashedPassword', async () => {
+  test('it should return new created user with hashedPassword', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'getExistingUser').resolves(null);
     const hashedPassword = '@hashedPassword';
@@ -60,7 +58,6 @@ describe('userSignup', () => {
     });
   });
 
-  //Error case
   test('it should throw error if creating user fails', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'getExistingUser').resolves(null);
@@ -74,7 +71,6 @@ describe('userSignup', () => {
     await expect(responsePromise).rejects.toThrow(errorMessage);
   });
 
-  //Success case
   test('it should not have "password" field in the returned data', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'getExistingUser').resolves(null);
@@ -99,7 +95,6 @@ describe('userSignin', () => {
     address: '123 Main St, Anytown USA'
   };
 
-  //Error case
   test('it should throw an error if user with given email does not exist', async () => {
     //Arrange
     const getExistingUserStub = sinon
@@ -116,7 +111,6 @@ describe('userSignin', () => {
     sinon.assert.calledWith(getExistingUserStub, email);
   });
 
-  //Error case
   test('it should throw error if password and email does not match', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'getExistingUser').resolves(payload);
@@ -131,8 +125,7 @@ describe('userSignin', () => {
     );
   });
 
-  //Success case
-  test('it should call generate accessToken and refreshToken', async () => {
+  test('it should generate accessToken and refreshToken', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'getExistingUser').resolves(payload);
     sinon.stub(bcrypt, 'compare').resolves(true);
@@ -157,7 +150,6 @@ describe('userSignin', () => {
     );
   });
 
-  //Success case
   test('it should return object containing id, name and tokens', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'getExistingUser').resolves(payload);
@@ -218,7 +210,6 @@ describe('getUsers', () => {
     { ...expectedData[1], password }
   ];
 
-  //Error case
   test('it should throw an error if fetchUser fails', async () => {
     //Arrange
     const errorMessage = "Couldn't fetch users";
@@ -231,7 +222,6 @@ describe('getUsers', () => {
     await expect(responsePromise).rejects.toThrow(errorMessage);
   });
 
-  //Success case
   test('it should map users data proper response data', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'fetchUser').resolves(users);
@@ -242,7 +232,6 @@ describe('getUsers', () => {
     sinon.assert.calledTwice(mapUserStub);
   });
 
-  //Success case
   test('it should return mapped user data without password', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'fetchUser').resolves(users);
