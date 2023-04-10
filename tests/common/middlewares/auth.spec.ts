@@ -1,5 +1,6 @@
-import { auth } from '@/common/middlewares/auth';
 import jwt from 'jsonwebtoken';
+import { Result } from '@/common/core/Result';
+import { auth } from '@/common/middlewares/auth';
 import { NextFunction, Request, Response, response } from 'express';
 
 jest.mock('jsonwebtoken');
@@ -27,13 +28,13 @@ describe('Auth Middleware Test', () => {
   test('it should throw 401 error with no auth headers', () => {
     // Arrange
     mockRequest.headers.authorization = null;
-    const expectedResponse = { message: 'Unauthorized User' };
+    const errorResponse = Result.fail('Unauthorized User');
     const statusCode = 401;
     // Act
     auth(mockRequest as Request, mockResponse as Response, nextFunction);
     // Assert
     expect(mockResponse.status).toBeCalledWith(statusCode);
-    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.json).toBeCalledWith(errorResponse);
   });
 
   test('it should call next function with valid auth token', () => {
@@ -52,7 +53,7 @@ describe('Auth Middleware Test', () => {
   test('it should throw Jwt Expired error with expired token', () => {
     // Arrange
     const errorCode = 400;
-    const errorMessage = { message: 'Access Token expired.' };
+    const errorResponse = Result.fail('Access Token expired.');
     (jwt.verify as jest.MockedFunction<typeof jwt.verify>).mockImplementation(
       (token, secret, options, callback) => {
         return callback(
@@ -65,13 +66,13 @@ describe('Auth Middleware Test', () => {
     auth(mockRequest as Request, mockResponse as Response, nextFunction);
     // Assert
     expect(mockResponse.status).toBeCalledWith(errorCode);
-    expect(mockResponse.json).toBeCalledWith(errorMessage);
+    expect(mockResponse.json).toBeCalledWith(errorResponse);
   });
 
   test('it should throw error with invalid auth token', () => {
     // Arrange
     const errorCode = 500;
-    const errorMessage = { message: 'Unauthorized User' };
+    const errorResponse = Result.fail('Unauthorized User');
     (jwt.verify as jest.MockedFunction<typeof jwt.verify>).mockImplementation(
       (token, secret, options, callback) => {
         return callback(
@@ -84,6 +85,6 @@ describe('Auth Middleware Test', () => {
     auth(mockRequest as Request, mockResponse as Response, nextFunction);
     // Assert
     expect(mockResponse.status).toBeCalledWith(errorCode);
-    expect(mockResponse.json).toBeCalledWith(errorMessage);
+    expect(mockResponse.json).toBeCalledWith(errorResponse);
   });
 });
