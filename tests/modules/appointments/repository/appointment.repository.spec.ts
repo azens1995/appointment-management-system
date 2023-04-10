@@ -228,7 +228,7 @@ describe('deleteAppointmentById', () => {
     jest.clearAllMocks();
   });
 
-  test('it should call delete appointment when the correct arguments provided', async () => {
+  test('it should return deleted appointment count when the correct arguments provided', async () => {
     // arrange
     const appointmentId = '1';
     const userId = '1';

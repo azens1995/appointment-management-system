@@ -68,7 +68,6 @@ describe('getUserCreatedAppointments', () => {
     sinon.restore();
   });
 
-  // success
   test('it should return the user created appointments with correct payload', async () => {
     // arrange
     const payload = {
