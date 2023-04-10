@@ -4,11 +4,6 @@ Appointment Management System is a project build upon the Node and Typescript.
 
 The main purpose of this project is to create the playground for the unit testing learning.
 
-![Coverage lines](./cov_badges/badge-lines.svg)
-![Coverage functions](./cov_badges/badge-functions.svg)
-![Coverage branches](./cov_badges/badge-branches.svg)
-![Coverage statements](./cov_badges/badge-statements.svg)
-
 ## Tech Stack
 
 1. Typescript
