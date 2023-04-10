@@ -59,6 +59,9 @@ export async function updateAppointmentById(
   appointmentId: string,
   appointmentData: Prisma.AppointmentUncheckedUpdateInput
 ) {
+  // Note: Using Update many as update does not support attributes in
+  // where clause if they are non-unique.
+  // Reference SO: https://stackoverflow.com/questions/67556792/prisma-update-using-where-with-non-unique-fields
   const appointment = await prisma.appointment.updateMany({
     where: {
       id: appointmentId,
@@ -74,6 +77,7 @@ export async function deleteAppointmentById(
   appointmentId: string,
   userId: string
 ) {
+  // Note: Using deleteMany similar to updateMany scenario
   const appointment = await prisma.appointment.deleteMany({
     where: { id: appointmentId, appointmentBy: userId }
   });
