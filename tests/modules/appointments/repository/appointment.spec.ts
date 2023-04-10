@@ -24,7 +24,8 @@ describe('createAppointment', () => {
     jest.clearAllMocks();
   });
 
-  test('should call prisma.user.create with the correct arguments', async () => {
+  test('it should create user with the correct arguments', async () => {
+    // arrange
     const expectedAppointMentData: Prisma.AppointmentUncheckedCreateInput = {
       id: '1',
       title: 'Hello',
@@ -37,10 +38,10 @@ describe('createAppointment', () => {
       expectedAppointMentData as Appointment
     );
 
-    //Act
+    // act
     const appointmentResult = await createAppointment(mockAppointmentData);
 
-    //Assert
+    // assert
     expect(appointmentResult).toBeDefined();
     expect(appointmentMockCreate).toHaveBeenCalledWith({
       data: mockAppointmentData
@@ -63,8 +64,8 @@ describe('updateAppointment', () => {
     jest.clearAllMocks();
   });
 
-  test('should call prisma.appointment.updateMany with the correct arguments', async () => {
-    // Arrange
+  test('it should call prisma.appointment.updateMany with the correct arguments', async () => {
+    // arrange
     const expectedAppointment = {
       id: '1',
       title: 'Hello',
@@ -79,13 +80,13 @@ describe('updateAppointment', () => {
       expectedAppointment as Prisma.PromiseReturnType<any>
     );
 
-    //Act
+    // act
     const appointmentResult = await updateAppointmentById(
       '1',
       mockAppointmentData
     );
 
-    //Assert
+    // assert
     expect(appointmentMockUpdateMany).toHaveBeenCalledWith({
       where: { id: '1', appointmentBy: '1' },
       data: mockAppointmentData
@@ -108,28 +109,28 @@ describe('findById', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  test('should call prisma.appointment.findUnique with the correct argument', async () => {
-    // Arrange
+  test('it should find appointment with the correct argument', async () => {
+    // arrange
     mockFindUnique.mockResolvedValueOnce(mockAppointment as Appointment);
 
-    // Act
+    // act
     const result = await getAppointmentById('1');
 
-    // Assert
+    // assert
     expect(mockFindUnique).toHaveBeenCalledWith({
       where: { id: '1' }
     });
     expect(result).toEqual(mockAppointment);
   });
 
-  test('should return null if appointment does not exist', async () => {
-    // Arrange
+  test('it should return null if appointment does not exist', async () => {
+    // arrange
     mockFindUnique.mockResolvedValueOnce(null);
 
-    // Act
+    // act
     const result = await getAppointmentById('1');
 
-    // Assert
+    // assert
     expect(mockFindUnique).toHaveBeenCalledWith({
       where: { id: '1' }
     });
@@ -152,11 +153,11 @@ describe('getAppointmentByUserId', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  test('should call prisma.appointment.findMany with the correct arguments', async () => {
-    // Arrange
+  test('it should find user by id provided', async () => {
+    // arrange
     mockFindMany.mockResolvedValueOnce([mockAppointment] as Appointment[]);
 
-    // Act
+    // act
     const result = await getAppointmentsByUserId(
       '1',
       10,
@@ -165,7 +166,7 @@ describe('getAppointmentByUserId', () => {
       'desc'
     );
 
-    // Assert
+    // assert
     expect(mockFindMany).toHaveBeenCalledWith({
       orderBy: { createdAt: 'desc' },
       where: { appointmentBy: '1' },
@@ -182,13 +183,13 @@ describe('getAppointmentById', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  test('should call prisma.appointment.findMany with the correct arguments', async () => {
+  test('it should get appointment by id with the correct arguments provided', async () => {
     const mockUserId = '1';
     const mockLimit = 10;
     const mockPage = 1;
     const mockSortBy = 'date';
     const mockSortDir = 'asc';
-    // Arrange
+    // arrange
     const expectedAppointment = [
       {
         id: '1',
@@ -208,7 +209,7 @@ describe('getAppointmentById', () => {
 
     mockFindMany.mockResolvedValueOnce(expectedAppointment as Appointment[]);
 
-    // Act
+    // act
     const appointmentResult = await getAppointmentForUserId(
       mockUserId,
       mockLimit,
@@ -217,7 +218,7 @@ describe('getAppointmentById', () => {
       mockSortDir as Prisma.SortOrder
     );
 
-    // Assert
+    // assert
     expect(mockFindMany).toHaveBeenCalledWith({
       orderBy: { [mockSortBy]: mockSortDir },
       where: { appointmentFor: mockUserId },
@@ -236,22 +237,22 @@ describe('deleteAppointmentById', () => {
     jest.clearAllMocks();
   });
 
-  test('should call prisma.appointment.deleteMany with the correct arguments', async () => {
-    // Arrange
+  test('it should call delete appointment when the correct arguments provided', async () => {
+    // arrange
     const appointmentId = '1';
     const userId = '1';
 
-    // Act
+    // act
     await deleteAppointmentById(appointmentId, userId);
 
-    // Assert
+    // assert
     expect(mockDeleteMany).toHaveBeenCalledWith({
       where: { id: appointmentId, appointmentBy: userId }
     });
   });
 
-  test('should return the deleted appointment', async () => {
-    // Arrange
+  test('it should return the deleted appointment', async () => {
+    // arrange
     const appointmentId = '1';
     const userId = '1';
     const expectedDeletedAppointment = {
@@ -264,24 +265,24 @@ describe('deleteAppointmentById', () => {
 
     mockDeleteMany.mockResolvedValueOnce(expectedDeletedAppointment as any);
 
-    // Act
+    // act
     const result = await deleteAppointmentById(appointmentId, userId);
 
-    // Assert
+    // assert
     expect(result).toEqual(expectedDeletedAppointment);
   });
 
-  test('should return null if no appointment was deleted', async () => {
-    // Arrange
+  test('it should return null if no appointment was deleted', async () => {
+    // arrange
     const appointmentId = '1';
     const userId = '1';
 
     mockDeleteMany.mockResolvedValueOnce(null);
 
-    // Act
+    // act
     const result = await deleteAppointmentById(appointmentId, userId);
 
-    // Assert
+    // assert
     expect(result).toBeNull();
   });
 });

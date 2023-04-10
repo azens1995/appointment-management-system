@@ -84,11 +84,3 @@ export async function deleteAppointmentById(
   return appointment;
 }
 
-module.exports = {
-  createAppointment,
-  getAppointmentById,
-  getAppointmentsByUserId,
-  getAppointmentForUserId,
-  updateAppointmentById,
-  deleteAppointmentById
-};
