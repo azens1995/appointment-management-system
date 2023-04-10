@@ -42,10 +42,23 @@ Every time you make changes to `prisma/schema.prisma` make sure to run above com
 
 For seeding run `npm run prisma:seed`
 
-## Github Test Badges Setup
+## Scripts
 
-Run `npm run test:badges` to generate the badges if there are changes in test coverage results.
-Push the changes directly to the target branch. (dev / master).
+1. Run app in watch mode
+   `npm run start:dev`
+
+2. Run test
+   `npm run test`
+
+3. Run test with coverage
+   `npm run test:badges`
+
+4. Run production build
+   `npm run build`
+
+## Postman
+
+You can find the postman collection of the available APIs [here](https://www.postman.com/crimson-rocket-526020/workspace/leapfrog-learning/collection/15898218-7845344d-494f-4ed7-a918-12dd3a7b0c74)
 
 ## Challenges
 
@@ -63,3 +76,10 @@ For the unit testing, one can begin mocking and spying the PrismaClient to test 
 2. For Service layer testing, it is recommended to use the Jest/SinonJS for mocking and spying.
 
 3. For API testing, it is recommended to use supertest.
+
+## Contributors
+
+1. Eklak Dangaura
+2. Nirajan Bist
+3. Ishwar Gautam
+4. Bipin Poudel
