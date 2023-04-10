@@ -39,7 +39,7 @@ describe('userSignup', () => {
     sinon.assert.calledWith(getExistingUserStub, email);
   });
 
-  test('it should call createUser with hashedPassword', async () => {
+  test('it should return new created user with hashedPassword', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'getExistingUser').resolves(null);
     const hashedPassword = '@hashedPassword';
@@ -125,7 +125,7 @@ describe('userSignin', () => {
     );
   });
 
-  test('it should call generate accessToken and refreshToken', async () => {
+  test('it should generate accessToken and refreshToken', async () => {
     //Arrange
     sinon.stub(UserRepositiory, 'getExistingUser').resolves(payload);
     sinon.stub(bcrypt, 'compare').resolves(true);
