@@ -3,7 +3,7 @@ import { AppError, HttpCode } from './appError';
 import { Result } from '@common/core/Result';
 import logger from '@/utils/logger';
 
-class ErrorHandler {
+export class ErrorHandler {
   private isTrustedError(error: Error): boolean {
     if (error instanceof AppError) {
       return error.isOperational;

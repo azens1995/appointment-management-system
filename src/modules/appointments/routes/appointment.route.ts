@@ -1,6 +1,6 @@
 import express from 'express';
 import { validate } from '@common/middlewares/validate.middleware';
-import * as AppointmentController from '../controllers/appointment.controller';
+import * as AppointmentController from '@/modules/appointments/controllers/appointment.controller';
 import {
   appointmentCreateValidator,
   appointmentUpdateValidator
