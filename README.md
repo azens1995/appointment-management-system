@@ -4,6 +4,11 @@ Appointment Management System is a project build upon the Node and Typescript.
 
 The main purpose of this project is to create the playground for the unit testing learning.
 
+![Coverage lines](./cov_badges/badge-lines.svg)
+![Coverage functions](./cov_badges/badge-functions.svg)
+![Coverage branches](./cov_badges/badge-branches.svg)
+![Coverage statements](./cov_badges/badge-statements.svg)
+
 ## Tech Stack
 
 1. Typescript
@@ -36,6 +41,11 @@ The main purpose of this project is to create the playground for the unit testin
 Every time you make changes to `prisma/schema.prisma` make sure to run above commands.
 
 For seeding run `npm run prisma:seed`
+
+## Github Test Badges Setup
+
+Run `npm run test:badges` to generate the badges if there are changes in test coverage results.
+Push the changes directly to the target branch. (dev / master).
 
 ## Challenges
 
