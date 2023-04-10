@@ -11,6 +11,7 @@ import {
 import { HttpCode } from '@/common/exceptions/appError';
 import { RequestWithUser } from '@/common/interfaces/express.interface';
 import { Result } from '@/common/core/Result';
+
 describe('getUserCreatedAppointments', () => {
   let appointmentServiceStub: sinon.SinonStub;
   let reqWithUser: RequestWithUser;
@@ -156,7 +157,7 @@ describe('getAppointment', () => {
   });
 
   test('it should return appointment successfully', async () => {
-    // Arrange
+    // arrange
     const appointment = {
       id: '1',
       name: 'Appointment 1',
@@ -168,7 +169,7 @@ describe('getAppointment', () => {
       .stub(appointmentService, 'getAppointment')
       .resolves(appointment);
 
-    // Act
+    // act
     await getAppointment(req, res, next);
 
     // Assert

@@ -1,4 +1,3 @@
-// createAppointment.test.js
 import sinon from 'sinon';
 import * as AppointmentRepository from '@/modules/appointments/repository/appointment.repository';
 import {
@@ -17,7 +16,7 @@ describe('createAppointment', () => {
     sinon.restore();
   });
 
-  test('it should call createAppointment with the correct payload', async () => {
+  test('it should return appointment object with the correct payload', async () => {
     // arrange
     const payload = {
       date: new Date('2021-04-07T10:00:00.000Z'),
@@ -70,7 +69,7 @@ describe('getUserCreatedAppointments', () => {
   });
 
   // success
-  test('it should call getUserCreatedAppointments with correct payload', async () => {
+  test('it should return the user created appointments with correct payload', async () => {
     // arrange
     const payload = {
       userId: '1',
